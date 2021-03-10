@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">WPCA</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for Page Titles -->
+    <string name="label_startpage_title">Start Page</string>
+    <string name="label_gamerecord_title">Game Record</string>
+    <string name="label_gamesetup_title">Game Setup</string>
+    <string name="label_evaluationpage_title">Evaluation Page</string>
+    <string name="label_teampage_title">Team Page</string>
+    <string name="label_ruleset_title">Manage Rulesets</string>
+    <!-- Strings used for Navigation Button Labels-->
+    <string name="button_navigation_gamesetup">Game Setup</string>
+    <string name="button_navigation_ruleset">Ruleset</string>
+    <string name="button_navigation_teampage">Teams</string>
+    <string name="button_navigation_evaluationpage">Evaluation</string>
+    <string name="button_navigation_startpage">Start</string>
+    <!-- Strings for Ruleset page -->
+    <string name="label_ruleset_select">Select Ruleset</string>
+    <string name="button_ruleset_create">New Set</string>
+</resources>

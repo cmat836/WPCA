@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/StartPage">
+
+    <fragment
+        android:id="@+id/StartPage"
+        android:name="com.cmat.wpca.fragments.StartPageFragment"
+        android:label="@string/label_startpage_title"
+        tools:layout="@layout/start_page">
+        <action
+            android:id="@+id/action_StartPage_to_GameSetup"
+            app:destination="@id/GameSetup" />
+        <action
+            android:id="@+id/action_StartPage_to_TeamPage"
+            app:destination="@id/TeamPage" />
+        <action
+            android:id="@+id/action_StartPage_to_RuleSets"
+            app:destination="@id/RuleSets" />
+        <action
+            android:id="@+id/action_StartPage_to_Evaluation"
+            app:destination="@id/Evaluation" />
+    </fragment>
+    <fragment
+        android:id="@+id/GameRecord"
+        android:name="com.cmat.wpca.fragments.GameRecordFragment"
+        android:label="@string/label_gamerecord_title"
+        tools:layout="@layout/game_record">
+
+        <action
+            android:id="@+id/action_GameRecordtoStartPage"
+            app:destination="@id/StartPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/TeamPage"
+        android:name="com.cmat.wpca.fragments.TeamFragment"
+        tools:layout="@layout/team_page">
+        <action
+            android:id="@+id/action_TeamPage_to_StartPage"
+            app:destination="@id/StartPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/GameSetup"
+        android:name="com.cmat.wpca.fragments.GameSetupFragment"
+        tools:layout="@layout/game_setup">
+        <action
+            android:id="@+id/action_GameSetup_to_GameRecord"
+            app:destination="@id/GameRecord" />
+        <action
+            android:id="@+id/action_GameSetup_to_StartPage"
+            app:destination="@id/StartPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/RuleSets"
+        android:name="com.cmat.wpca.fragments.RulesetFragment"
+        tools:layout="@layout/ruleset_page">
+        <action
+            android:id="@+id/action_RuleSets_to_StartPage"
+            app:destination="@id/StartPage" />
+    </fragment>
+    <fragment
+        android:id="@+id/Evaluation"
+        android:name="com.cmat.wpca.fragments.EvaluationFragment"
+        tools:layout="@layout/evaluation_page">
+        <action
+            android:id="@+id/action_Evaluation_to_StartPage"
+            app:destination="@id/StartPage" />
+    </fragment>
+</navigation>
