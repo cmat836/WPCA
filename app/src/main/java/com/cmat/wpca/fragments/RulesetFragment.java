@@ -1,11 +1,19 @@
 package com.cmat.wpca.fragments;
 
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.Spinner;
 
 import androidx.annotation.NonNull;
@@ -34,10 +42,8 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
 
         if (!dataStore.isLoaded()) {
-            dataStore.load(getContext(), new JSONManager.Builder<RulesetEntry>("rulesets").setStorageType(JSONManager.StorageType.INTERNAL));
+            dataStore.load(getContext(), new JSONManager.Builder<RulesetEntry>("rulesets", new RulesetEntry()).setStorageType(JSONManager.StorageType.INTERNAL));
         }
-
-        dataStore.makeBumFile(getContext());
 
         Spinner rulesetSelector = (Spinner)view.findViewById(R.id.spinner_ruleset_select);
         rulesetSelector.setOnItemSelectedListener(this);
@@ -51,6 +57,45 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
                 NavHostFragment.findNavController(RulesetFragment.this).popBackStack(R.id.StartPage, false);
             }
         });
+
+        view.findViewById(R.id.fab_addentry).setOnClickListener(this::onNewRulesetWindowButtonClick);
+    }
+
+    public void onNewRulesetWindowButtonClick(View v) {
+        if (dataStore.isLoaded())
+            dataStore.refresh(getContext());
+        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View newRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_create, null);
+        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+        boolean focusable = true; // lets taps outside the popup also dismiss it
+        final PopupWindow popupWindow = new PopupWindow(newRulesetView, width, height, focusable);
+        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        popupWindow.setElevation(20);
+        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+        newRulesetView.findViewById(R.id.createruleset_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCreateRulesetButtonClick(v, popupWindow);
+            }
+        });
+    }
+
+    public void onCreateRulesetButtonClick(View v, PopupWindow p) {
+        if (dataStore.isLoaded())
+            dataStore.refresh(getContext());
+        EditText e = (EditText) (p.getContentView().findViewById(R.id.ruleset_name_edittext));
+        RulesetEntry newset = new RulesetEntry.RulesetEntryBuilder(e.getText().toString()).build();
+        dataStore.addEntry(newset);
+        dataStore.write(getContext());
+        refreshRulesetSpinner();
+        p.dismiss();
+    }
+
+    public void refreshRulesetSpinner() {
+        Spinner s = this.getView().findViewById(R.id.spinner_ruleset_select);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, dataStore.getDataAsArray());
+        s.setAdapter(adapter);
     }
 
     @Override

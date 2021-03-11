@@ -14,6 +14,7 @@ import com.cmat.wpca.data.PlayerEntry;
 import com.cmat.wpca.data.RulesetEntry;
 import com.cmat.wpca.data.TeamEntry;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -27,15 +28,16 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class JSONManager<T extends IEntry> {
     public static JSONManager<BlankEntry> blankManager = new JSONManager<BlankEntry>();
 
-    File directoryPath;
     String directoryName;
-
+    Gson gson = new GsonBuilder().setPrettyPrinting().create();
     StorageType storageType;
+    T entryType;
 
     private JSONManager() {
     }
@@ -46,23 +48,61 @@ public class JSONManager<T extends IEntry> {
             // Do External Load
         } else
         if (storageType == StorageType.INTERNAL) {
-            /**
-            File[] files = directoryPath.listFiles();
-            ArrayList<String> filecontent = new ArrayList<>();
-            for (File f : files)  {
-                filecontent.add(getFileContent(context, f));
-            }**/
-            ret.put("No Rulesets Found", null);
+            File dir = getDirectory(context);
+            File [] allFiles = dir.listFiles();
+            ArrayList<String> fileContent = new ArrayList<>();
+
+            for (File f : allFiles) {
+                fileContent.add(getFileContent(context, f));
+            }
+            if (fileContent.size() == 0) {
+            }
+            for (String s : fileContent) {
+                IEntry entry = entryType.getFromJSON(gson, s);
+                ret.put(entry.getName(), (T) entry);
+            }
 
         }
         return ret;
     }
 
-    private String getFileContent(Context context, String directory, String filename) {
-        String ret = "";
+    public void write(Context context, HashMap<String, T> data) {
+        if (storageType == StorageType.EXTERNAL) {
+            // Do External Write
+        } else
+        if (storageType == StorageType.INTERNAL) {
+            for (String e : data.keySet()) {
+                String content = data.get(e).getJSON(gson);
+                setFileContent(context, directoryName,  e + ".json", content);
+            }
+        }
+    }
 
+    private File getDirectory(Context context) {
+        File f;
+        if (directoryName == "")
+            f = context.getFilesDir();
+        else
+            f = context.getDir(directoryName ,context.MODE_PRIVATE);
+        return f;
+    }
+
+    private String getFileContent(Context context, String fileName) {
+        return getFileContent(context, directoryName, fileName);
+    }
+
+    private String getFileContent(Context context, String directory, String fileName) {
+        String ret = "";
+        File f;
+        if (directory == "")
+            f = context.getFilesDir();
+        else
+            f = context.getDir(directory ,context.MODE_PRIVATE);
+        f = new File(f, fileName);
+        if (!f.exists())
+            return ret;
         try {
-            InputStream inputStream = context.openFileInput(filename);
+            InputStream inputStream = new FileInputStream(f);
 
             if ( inputStream != null ) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -70,7 +110,7 @@ public class JSONManager<T extends IEntry> {
                 String receiveString = "";
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while ( (receiveString = bufferedReader.readLine()) != null ) {
+                while ((receiveString = bufferedReader.readLine()) != null ) {
                     stringBuilder.append(receiveString);
                 }
 
@@ -83,9 +123,19 @@ public class JSONManager<T extends IEntry> {
         return ret;
     }
 
-    public void setFileContent(Context context, String fileName, String content) {
+    private String getFileContent(Context context, File fileName) {
+        return getFileContent(context, fileName.getName());
+    }
+
+    private void setFileContent(Context context, String directory, String fileName, String content) {
+        File f;
+        if (directory == "")
+            f = context.getFilesDir();
+        else
+            f = context.getDir(directory ,context.MODE_PRIVATE);
         try {
-            FileOutputStream outputStream = context.openFileOutput(new File(directoryName, fileName).getName(), Context.MODE_PRIVATE);
+            f = new File(f, fileName);
+            FileOutputStream outputStream = new FileOutputStream(f); //context.openFileOutput(f., Context.MODE_PRIVATE);
             outputStream.write(content.getBytes());
             outputStream.close();
         } catch (IOException e) {
@@ -93,7 +143,15 @@ public class JSONManager<T extends IEntry> {
         }
     }
 
-    public void createFile(Context context, String directory, String fileName) {
+    private void setFileContent(Context context, String fileName, String content) {
+        setFileContent(context, directoryName, fileName, content);
+    }
+
+    private void setFileContent(Context context, File fileName, String content) {
+        setFileContent(context, fileName.getName(), content);
+    }
+
+    private void createFile(Context context, String directory, String fileName) {
         File f;
         if (directory == "")
             f = context.getFilesDir();
@@ -111,16 +169,18 @@ public class JSONManager<T extends IEntry> {
         }
     }
 
-    public void createFile(Context context, String fileName) {
+    private void createFile(Context context, String fileName) {
         createFile(context, directoryName, fileName);
     }
 
     public static class Builder<T extends IEntry> {
         String directoryName = "";
         StorageType storageType = StorageType.INTERNAL;
+        T strat;
 
-        public Builder(String directoryName) {
+        public Builder(String directoryName, T type) {
             this.directoryName = directoryName;
+            strat = type;
         }
 
         public Builder<T> setStorageType(StorageType type) {
@@ -132,6 +192,7 @@ public class JSONManager<T extends IEntry> {
             JSONManager<T> built = new JSONManager<T>();
             built.directoryName = directoryName;
             built.storageType = storageType;
+            built.entryType = strat;
             return built;
         }
     }

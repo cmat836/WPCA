@@ -1,6 +1,7 @@
 package com.cmat.wpca.data;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.cmat.wpca.data.json.JSONManager;
 
@@ -30,16 +31,29 @@ public class DataStore <T extends IEntry> {
         loaded = true;
     }
 
-    public void makeBumFile(Context context) {
-        manager.createFile(context, "bums", "bumfile.txt");
-        manager.setFileContent(context, "bumfile.txt", "I like bums");
+    public void write(Context context) {
+        manager.write(context, data);
+    }
+
+    public void addEntry(T entry) {
+        data.put(entry.getName(), entry);
+    }
+
+    public void refresh(Context context) {
+        data = manager.load(context);
     }
 
     public String[] getDataAsArray() {
         if (!loaded) {
             return new String[] { "" };
         }
-        String[] s = new String[data.keySet().size()];
-        return data.keySet().toArray(s);
+        String[] s;
+        if (data.size() == 0) {
+            s = new String[] { "No Data found"};
+            return s;
+        } else {
+            s = new String[data.keySet().size()];
+            return data.keySet().toArray(s);
+        }
     }
 }
