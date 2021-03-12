@@ -23,14 +23,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
-import com.cmat.wpca.data.DataStore;
+import com.cmat.wpca.data.DataStoreOld;
 import com.cmat.wpca.data.RulesetEntry;
 import com.cmat.wpca.data.json.JSONManager;
 
-import org.w3c.dom.Text;
-
 public class RulesetFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    DataStore<RulesetEntry> dataStore = new DataStore<>(new RulesetEntry());
+    DataStoreOld<RulesetEntry> dataStore = new DataStoreOld<>(new RulesetEntry());
 
     @Override
     public View onCreateView(
