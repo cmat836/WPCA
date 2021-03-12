@@ -52,8 +52,10 @@ public class JSONManager<T extends IEntry> {
             File [] allFiles = dir.listFiles();
             ArrayList<String> fileContent = new ArrayList<>();
 
-            for (File f : allFiles) {
-                fileContent.add(getFileContent(context, f));
+            if (allFiles != null) {
+                for (File f : allFiles) {
+                    fileContent.add(getFileContent(context, f));
+                }
             }
             if (fileContent.size() == 0) {
             }
@@ -61,7 +63,6 @@ public class JSONManager<T extends IEntry> {
                 IEntry entry = entryType.getFromJSON(gson, s);
                 ret.put(entry.getName(), (T) entry);
             }
-
         }
         return ret;
     }
@@ -104,19 +105,17 @@ public class JSONManager<T extends IEntry> {
         try {
             InputStream inputStream = new FileInputStream(f);
 
-            if ( inputStream != null ) {
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-                String receiveString = "";
-                StringBuilder stringBuilder = new StringBuilder();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String receiveString = "";
+            StringBuilder stringBuilder = new StringBuilder();
 
-                while ((receiveString = bufferedReader.readLine()) != null ) {
-                    stringBuilder.append(receiveString);
-                }
-
-                inputStream.close();
-                ret = stringBuilder.toString();
+            while ((receiveString = bufferedReader.readLine()) != null ) {
+                stringBuilder.append(receiveString);
             }
+
+            inputStream.close();
+            ret = stringBuilder.toString();
         } catch (Exception e) {
         }
 

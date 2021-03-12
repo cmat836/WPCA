@@ -2,16 +2,29 @@ package com.cmat.wpca.data;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
 public class RulesetEntry implements IEntry {
     String name;
     String parentName;
 
-    String rule1;
-    boolean rule2;
-    int rule3;
-    String rule4;
+    ArrayList<Rule> rules;
 
     public RulesetEntry() {
+        rules = new ArrayList<>();
+    }
+
+    public Object getRuleByPosition(int position) {
+        if (position == 0) {
+            return name;
+        } else {
+            return rules.get(position - 1);
+        }
+    }
+
+    public void modifyRule(String name, String rule) {
+
     }
 
     public String getName() {
@@ -19,7 +32,7 @@ public class RulesetEntry implements IEntry {
     }
 
     public IEntry getNull() {
-        return null;
+        return new RulesetEntryBuilder("blank").build();
     }
 
     public IEntry getFromJSON(Gson gson, String json) {
@@ -28,6 +41,33 @@ public class RulesetEntry implements IEntry {
 
     public String getJSON(Gson gson) {
         return gson.toJson(this);
+    }
+
+    public static class Rule {
+        String name;
+        String info;
+
+        public Rule() {
+            name = "";
+            info = "";
+        }
+
+        public Rule(String name, String info) {
+            this.name = name;
+            this.info = info;
+        }
+
+        public void setInfo(String info) {
+            this.info = info;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getInfo() {
+            return info;
+        }
     }
 
     public static class RulesetEntryBuilder {
@@ -60,10 +100,11 @@ public class RulesetEntry implements IEntry {
             RulesetEntry r = new RulesetEntry();
             r.name = name;
             r.parentName = parentName;
-            r.rule1 = rule1;
-            r.rule2 = rule2;
-            r.rule3 = rule3;
-            r.rule4 = rule4;
+            r.rules = new ArrayList<>();
+            r.rules.add(new Rule("rule1", rule1));
+            r.rules.add(new Rule("rule2", String.valueOf(rule2)));
+            r.rules.add(new Rule("rule3", String.valueOf(rule3)));
+            r.rules.add(new Rule("rule4", rule4));
             return r;
         }
     }

@@ -16,9 +16,11 @@ public class DataStore <T extends IEntry> {
     JSONManager<T> manager;
 
     boolean loaded;
+    T entryType;
 
-    public DataStore() {
+    public DataStore(T blank) {
         loaded = false;
+        entryType = blank;
     }
 
     public boolean isLoaded() {
@@ -38,6 +40,16 @@ public class DataStore <T extends IEntry> {
     public void addEntry(T entry) {
         data.put(entry.getName(), entry);
     }
+
+    public T getEntryByName(String name) {
+        if (data.size() == 0) {
+            return (T) entryType.getNull();
+        } else {
+            return data.get(name);
+        }
+    }
+
+
 
     public void refresh(Context context) {
         data = manager.load(context);
