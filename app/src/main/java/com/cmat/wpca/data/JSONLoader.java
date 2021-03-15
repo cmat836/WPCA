@@ -1,7 +1,6 @@
 package com.cmat.wpca.data;
 
 import android.content.Context;
-import android.graphics.PaintFlagsDrawFilter;
 import android.os.Environment;
 import android.util.Log;
 
@@ -16,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * A class to assist loading JSON files from the OS correct storage locations
@@ -33,25 +33,46 @@ public class JSONLoader {
      * @param storageType Internal or external storage
      */
     public JSONLoader(String fileDirectory, StorageType storageType) {
-        this.fileDirectory = this.fileDirectory;
+        this.fileDirectory = fileDirectory;
         this.storageType = storageType;
         noDirectory = false;
-        if (fileDirectory == null || fileDirectory == "") {
+        if (fileDirectory == null || fileDirectory.equals("")) {
             noDirectory = true;
         }
     }
 
-    public <T extends IEntry> T getEntryFromFile(Context context, String fileName, Class<T> tClass) {
-        return gson.fromJson(getFileContent(context, fileName), tClass);
+    @SuppressWarnings("unchecked")
+    public <T extends IEntry> T readEntryFromFile(Context context, String entryName, Class<T> tClass) {
+        String fileContent = getFileContent(context, entryName + ".json");
+        if (fileContent == null || fileContent.equals("")) {
+            try {
+                return (T) tClass.newInstance().getNull();
+            } catch (IllegalAccessException | InstantiationException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        return gson.fromJson(getFileContent(context, entryName + ".json"), tClass);
     }
 
-    public <T extends IEntry> ArrayList<T> getAllEntries(Context context, Class<T> tClass) {
-        ArrayList<String> names = getListOfFileNames(context);
+    public <T extends IEntry> ArrayList<T> readAllEntries(Context context, Class<T> tClass) {
+        ArrayList<String> names = getListOfEntries(context);
         ArrayList<T> ret = new ArrayList<>();
         for (String s : names) {
-            ret.add(getEntryFromFile(context, s, tClass));
+            ret.add(readEntryFromFile(context, s, tClass));
         }
         return ret;
+    }
+
+    public void writeEntryToFile(Context context, IEntry entry) {
+        String content = gson.toJson(entry);
+        setFileContent(context, entry.getName() + ".json", content);
+    }
+
+    public void writeAllEntries(Context context, Collection<IEntry> entries) {
+        for (IEntry e : entries) {
+            writeEntryToFile(context, e);
+        }
     }
 
     private ArrayList<File> getListOfFiles(Context context) {
@@ -66,15 +87,16 @@ public class JSONLoader {
         return ret;
     }
 
-    public ArrayList<String> getListOfFileNames(Context context) {
+    public ArrayList<String> getListOfEntries(Context context) {
         File dir = getDirectory(context);
         File [] allFiles = dir.listFiles();
         ArrayList<String> ret = new ArrayList<>();
         if (allFiles != null) {
             for (File f : allFiles) {
-                ret.add(f.getName());
+                ret.add(f.getName().substring(0,f.getName().length() - 5)); // Remove the .json
             }
         }
+        return ret;
     }
 
     /**
@@ -84,6 +106,7 @@ public class JSONLoader {
      * @return
      */
     private File getDirectory(Context context) {
+
         if (storageType == StorageType.EXTERNAL_PRIVATE) {
             if (isExternalStorageWritable()) {
                 return context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);

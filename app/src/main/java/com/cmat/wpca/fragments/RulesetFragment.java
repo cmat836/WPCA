@@ -23,12 +23,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
-import com.cmat.wpca.data.DataStoreOld;
+import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.RulesetEntry;
-import com.cmat.wpca.data.json.JSONManager;
 
 public class RulesetFragment extends Fragment implements AdapterView.OnItemSelectedListener {
-    DataStoreOld<RulesetEntry> dataStore = new DataStoreOld<>(new RulesetEntry());
+    DataStore<RulesetEntry> dataStore = new DataStore<>("rulesets", RulesetEntry.class);
 
     @Override
     public View onCreateView(
@@ -42,19 +41,16 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
-        if (!dataStore.isLoaded()) {
-            dataStore.load(getContext(), new JSONManager.Builder<RulesetEntry>("rulesets", new RulesetEntry()).setStorageType(JSONManager.StorageType.INTERNAL));
-        }
+        dataStore.load(getContext());
 
         RecyclerView rulesetDisplay = (RecyclerView)view.findViewById(R.id.rulesetdisplay_recyclerview);
         rulesetDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
-        RulesetAdapter radapter = new RulesetAdapter(this, "");
+        RulesetAdapter radapter = new RulesetAdapter(this);
         rulesetDisplay.setAdapter(radapter);
 
         Spinner rulesetSelector = (Spinner)view.findViewById(R.id.spinner_ruleset_select);
         rulesetSelector.setOnItemSelectedListener(this);
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, dataStore.getDataAsArray());
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, dataStore.getArrayOfEntryNames());
         rulesetSelector.setAdapter(adapter);
 
         view.findViewById(R.id.backtostart_button).setOnClickListener(new View.OnClickListener() {
@@ -74,10 +70,11 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public void onNewRulesetWindowButtonClick(View v) {
-        if (dataStore.isLoaded())
-            dataStore.refresh(getContext());
+        dataStore.refresh(getContext());
+
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_create, null);
+
         int width = LinearLayout.LayoutParams.WRAP_CONTENT;
         int height = LinearLayout.LayoutParams.WRAP_CONTENT;
         boolean focusable = true; // lets taps outside the popup also dismiss it
@@ -85,6 +82,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         popupWindow.setElevation(20);
         popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+
         newRulesetView.findViewById(R.id.createruleset_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,43 +92,42 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public void onCreateRulesetButtonClick(View v, PopupWindow p) {
-        if (dataStore.isLoaded())
-            dataStore.refresh(getContext());
         EditText e = (EditText) (p.getContentView().findViewById(R.id.ruleset_name_edittext));
         RulesetEntry newset = new RulesetEntry.RulesetEntryBuilder(e.getText().toString()).build();
-        dataStore.addEntry(newset);
-        dataStore.write(getContext());
+        dataStore.setEntry(newset);
         refreshRulesetSpinner();
+        dataStore.refresh(getContext());
         p.dismiss();
     }
 
-    public void onModifyRuleButtonClick(View v, PopupWindow p, String ruleset, int rule) {
+    public void onModifyRuleButtonClick(View v, PopupWindow p, int rule) {
         EditText e = (EditText) (p.getContentView().findViewById(R.id.rule_new_edittext));
-        Object r = dataStore.getEntryByName(ruleset).getRuleByPosition(rule);
+        Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
             ((RulesetEntry.Rule)r).setInfo(e.getText().toString());
         }
-        dataStore.write(getContext());
-        refreshRulesetDisplaySet(ruleset);
+        dataStore.markModified(dataStore.getSelected().getName());
+        dataStore.refresh(getContext());
+        refreshRulesetDisplaySet();
         p.dismiss();
     }
 
     public void refreshRulesetSpinner() {
         Spinner s = this.getView().findViewById(R.id.spinner_ruleset_select);
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, dataStore.getDataAsArray());
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, dataStore.getArrayOfEntryNames());
         s.setAdapter(adapter);
     }
 
-    public void refreshRulesetDisplaySet(String set) {
+    public void refreshRulesetDisplaySet() {
         RecyclerView rulesetDisplay = (RecyclerView)this.getView().findViewById(R.id.rulesetdisplay_recyclerview);
-        RulesetAdapter radapter = new RulesetAdapter(this, set);
+        RulesetAdapter radapter = new RulesetAdapter(this);
         rulesetDisplay.setAdapter(radapter);
     }
 
-    private boolean onRuleLongPress(View view, String ruleset, int rule) {
+    private boolean onRuleLongPress(View view, int rule) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View ruleModify = inflater.inflate(R.layout.popupwindow_rule_modify, null);
-        Object r = dataStore.getEntryByName(ruleset).getRuleByPosition(rule);
+        Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
             ((TextView)ruleModify.findViewById(R.id.rulemodify_name_textview)).setText(((RulesetEntry.Rule)r).getName());
         }
@@ -144,7 +141,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         ruleModify.findViewById(R.id.modifyrule_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onModifyRuleButtonClick(v, popupWindow, ruleset, rule);
+                onModifyRuleButtonClick(v, popupWindow, rule);
             }
         });
         return true;
@@ -152,8 +149,9 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String nme = (String)parent.getItemAtPosition(position);
-        refreshRulesetDisplaySet(nme);
+        String name = (String)parent.getItemAtPosition(position);
+        dataStore.setSelected(name);
+        refreshRulesetDisplaySet();
     }
 
     @Override
@@ -163,11 +161,9 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
     public static class RulesetAdapter extends RecyclerView.Adapter<ViewHolder> {
         RulesetFragment context;
-        String name;
 
-        public RulesetAdapter(RulesetFragment context, String rulesetname) {
+        public RulesetAdapter(RulesetFragment context) {
             this.context = context;
-            name = rulesetname;
         }
 
         @NonNull
@@ -179,18 +175,18 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            if (name == "blank" || name == "") {
+            if (context.dataStore.getSelected().getName() == "blank" || context.dataStore.getSelected().getName() == "") {
                 holder.getNameText().setText("");
                 holder.getInfoText().setText("");
             } else {
-                Object r = context.dataStore.getEntryByName(name).getRuleByPosition(position);
+                Object r = context.dataStore.getSelected().getRuleByPosition(position);
                 if (r instanceof RulesetEntry.Rule) {
                     holder.getNameText().setText(((RulesetEntry.Rule)r).getName());
                     holder.getInfoText().setText(((RulesetEntry.Rule)r).getInfo());
                     holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                         @Override
                         public boolean onLongClick(View v) {
-                            return context.onRuleLongPress(v, name, position);
+                            return context.onRuleLongPress(v, position);
                         }
                     });
                 } else {

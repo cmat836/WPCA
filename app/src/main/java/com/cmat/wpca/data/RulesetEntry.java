@@ -13,6 +13,7 @@ public class RulesetEntry implements IEntry {
 
     public RulesetEntry() {
         rules = new ArrayList<>();
+        name = "blank";
     }
 
     public Object getRuleByPosition(int position) {
