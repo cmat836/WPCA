@@ -75,6 +75,10 @@ public class JSONLoader {
         }
     }
 
+    public void removeEntry(Context context, IEntry entry) {
+        removeFile(context, entry.getName() + ".json");
+    }
+
     private ArrayList<File> getListOfFiles(Context context) {
         File dir = getDirectory(context);
         File [] allFiles = dir.listFiles();
@@ -172,6 +176,12 @@ public class JSONLoader {
             Log.println(Log.WARN, "WPCA", "File failed to load: " + f.getPath());
         }
         return ret;
+    }
+
+    private void removeFile(Context context, String fileName) {
+        File f = getDirectory(context);
+        f = new File(f, fileName);
+        boolean warning = f.delete();
     }
 
     /**

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/createplayer_title_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:text="@string/label_playercreate_title"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/player_name_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:autofillHints="@string/hint_rulesetcreate_name"
+        android:ems="10"
+        android:hint="@string/hint_playercreate_name"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <EditText
+        android:id="@+id/player_number_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:autofillHints="@string/hint_rulesetcreate_name"
+        android:ems="10"
+        android:hint="@string/hint_playercreate_number"
+        android:inputType="textPersonName"
+        android:text="" />
+
+    <RadioGroup
+        android:id="@+id/player_handedness_group"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/left_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radiobutton_playercreate_left" />
+
+        <RadioButton
+            android:id="@+id/right_radio"
+            android:layout_width="82dp"
+            android:layout_height="wrap_content"
+            android:text="@string/radiobutton_playercreate_right" />
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/goalie_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:text="@string/checkbox_playercreate_goalie" />
+
+    <Spinner
+        android:id="@+id/team_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <Button
+        android:id="@+id/createplayer_button"
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/button_rulesetcreate_create"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"/>
+</LinearLayout>

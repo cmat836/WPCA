@@ -7,8 +7,10 @@ import java.util.HashMap;
 
 public class DataStore <T extends IEntry> {
     HashMap<String, T> data = new HashMap<>();
+    HashMap<String, T> removedData = new HashMap<>();
 
     ArrayList<String> diffList = new ArrayList<>();
+    ArrayList<String> removeList = new ArrayList<>();
 
     JSONLoader loader;
     Class<T> entryClass;
@@ -50,6 +52,10 @@ public class DataStore <T extends IEntry> {
         for (String s : diffList) {
             loader.writeEntryToFile(context, data.get(s));
         }
+        for (String s : removeList) {
+            loader.removeEntry(context, removedData.get(s));
+            removedData.remove(removedData.get(s).getName());
+        }
     }
 
     public void markModified(String name) {
@@ -76,6 +82,13 @@ public class DataStore <T extends IEntry> {
         data.put(entry.getName(), entry);
         modified = true;
         diffList.add(entry.getName());
+    }
+
+    public void removeEntry(T entry) {
+        modified = true;
+        removeList.add(entry.getName());
+        removedData.put(entry.getName(), entry);
+        data.remove(entry.getName());
     }
 
     public String[] getArrayOfEntryNames() {

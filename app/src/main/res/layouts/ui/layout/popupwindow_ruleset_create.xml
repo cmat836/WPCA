@@ -5,11 +5,11 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/newruleset_title_textview"
+        android:id="@+id/createruleset_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Create new Ruleset"
+        android:text="@string/label_rulesetcreate_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold"
@@ -28,14 +28,16 @@
         android:text=""
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp"
+        android:hint="@string/hint_rulesetcreate_name"
+        android:autofillHints="@string/hint_rulesetcreate_name" />
 
     <CheckBox
-        android:id="@+id/parent_ruleset_checkbox"
+        android:id="@+id/parentruleset_checkbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Use parent rulset?"
+        android:text="@string/checkbox_rulesetcreate_useparent"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>
@@ -45,7 +47,7 @@
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="create"
+        android:text="@string/button_rulesetcreate_create"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>

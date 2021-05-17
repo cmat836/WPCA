@@ -14,13 +14,4 @@ public class BlankEntry implements IEntry {
         return blankEntry;
     }
 
-    @Override
-    public IEntry getFromJSON(Gson gson, String json) {
-        return new BlankEntry();
-    }
-
-    @Override
-    public String getJSON(Gson gson) {
-        return gson.toJson(this);
-    }
 }

@@ -5,50 +5,38 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/rulemodify_title_textview"
+        android:id="@+id/createteam_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_rulemodify_title"
+        android:text="@string/label_teamcreate_title"
         android:textAlignment="center"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        />
-
-    <TextView
-        android:id="@+id/rulemodify_name_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/label_rulemodify_name"
-        android:textAlignment="center"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"
-        />
+        android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/rule_new_edittext"
+        android:id="@+id/team_name_edittext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_weight="1"
+        android:autofillHints="@string/hint_rulesetcreate_name"
+        android:ems="10"
+        android:hint="@string/hint_teamcreate_name"
+        android:inputType="textPersonName"
+        android:text="" />
 
     <Button
-        android:id="@+id/modifyrule_button"
+        android:id="@+id/createteam_button"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_rulemodify_modify"
+        android:text="@string/button_rulesetcreate_create"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>

@@ -7,7 +7,7 @@
     tools:context=".fragments.RulesetFragment">
 
     <TextView
-        android:id="@+id/rulesettitle_textview"
+        android:id="@+id/rulesetpagetitle_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
@@ -38,21 +38,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rulesettitle_textview" />
+        app:layout_constraintTop_toBottomOf="@id/rulesetpagetitle_textview" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_addentry"
+        android:id="@+id/fab_addruleset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="36dp"
         android:clickable="true"
-        android:contentDescription="Add new Entry"
+        android:contentDescription="@string/fab_ruleset_addentry"
         android:src="@android:drawable/ic_input_add"
         app:fabCustomSize="75sp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:focusable="true" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rulesetdisplay_recyclerview"
@@ -65,7 +66,7 @@
         app:layout_constraintTop_toBottomOf="@id/spinner_ruleset_select" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_removeentry"
+        android:id="@+id/fab_removeruleset"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -74,7 +75,9 @@
         android:src="@android:drawable/ic_menu_delete"
         app:fabCustomSize="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusable="true"
+        android:contentDescription="@string/fab_ruleset_removeentry" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

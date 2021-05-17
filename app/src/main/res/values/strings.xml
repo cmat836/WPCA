@@ -6,7 +6,7 @@
     <string name="label_gamerecord_title">Game Record</string>
     <string name="label_gamesetup_title">Game Setup</string>
     <string name="label_evaluationpage_title">Evaluation Page</string>
-    <string name="label_teampage_title">Team Page</string>
+    <string name="label_teampage_title">Manage Teams</string>
     <string name="label_ruleset_title">Manage Rulesets</string>
     <!-- Strings used for Navigation Button Labels-->
     <string name="button_navigation_gamesetup">Game Setup</string>
@@ -17,4 +17,34 @@
     <!-- Strings for Ruleset page -->
     <string name="label_ruleset_select">Select Ruleset</string>
     <string name="button_ruleset_create">New Set</string>
+    <string name="fab_ruleset_addentry">Add New Entry</string>
+    <string name="fab_ruleset_removeentry">Remove Entry</string>
+    <!-- Strings for Ruleset Popup Windows -->
+    <string name="label_rulemodify_title">Modify Rule</string>
+    <string name="label_rulemodify_name">Rule Name</string>
+    <string name="button_rulemodify_modify">Modify</string>
+    <string name="label_rulesetcreate_title">Create New Ruleset</string>
+    <string name="checkbox_rulesetcreate_useparent">Use Parent Ruleset?</string>
+    <string name="hint_rulesetcreate_name">Ruleset Name</string>
+    <string name="button_rulesetcreate_create">Create</string>
+    <string name="label_rulesetremove_title">Remove Ruleset?</string>
+    <string name="button_rulesetremove_remove">Remove</string>
+    <!-- Strings for Team page -->
+    <string name="label_playerinfo_name">Name</string>
+    <string name="label_playerinfo_number">Number</string>
+    <string name="label_playerinfo_birthday">Birthday</string>
+    <string name="label_playerinfo_teams">Teams</string>
+    <string name="label_playerinfo_handedness">Handedness</string>
+    <string name="label_playerinfo_goalie">Goalie</string>
+    <!-- Strings for Team Popup Windows -->
+    <string name="label_playercreate_title">Create New Player</string>
+    <string name="label_teamcreate_title">Create New Team</string>
+    <string name="hint_teamcreate_name">Team Name</string>
+    <string name="hint_playercreate_name">Player Name</string>
+    <string name="hint_playercreate_number">Player Number</string>
+    <string name="checkbox_playercreate_goalie">Is Player a Goalie</string>
+    <string name="radiobutton_playercreate_left">Left</string>
+    <string name="radiobutton_playercreate_right">Right</string>
+    <string name="label_playerremove_title">Remove Player?</string>
+    <string name="label_teamremove_title">Remove Team?</string>
 </resources>

@@ -28,20 +28,14 @@ public class RulesetEntry implements IEntry {
 
     }
 
+    @Override
     public String getName() {
         return name;
     }
 
+    @Override
     public IEntry getNull() {
         return new RulesetEntryBuilder("blank").build();
-    }
-
-    public IEntry getFromJSON(Gson gson, String json) {
-        return gson.fromJson(json, RulesetEntry.class);
-    }
-
-    public String getJSON(Gson gson) {
-        return gson.toJson(this);
     }
 
     public static class Rule {

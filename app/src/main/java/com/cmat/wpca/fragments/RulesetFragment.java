@@ -29,6 +29,10 @@ import com.cmat.wpca.data.RulesetEntry;
 public class RulesetFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     DataStore<RulesetEntry> dataStore = new DataStore<>("rulesets", RulesetEntry.class);
 
+    final PopupWindow newRulesetWindow = new PopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+    final PopupWindow ruleModifyWindow  = new PopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+    final PopupWindow removeRulesetWindow = new PopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+
     @Override
     public View onCreateView(
             LayoutInflater inflater, ViewGroup container,
@@ -50,58 +54,63 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
         Spinner rulesetSelector = (Spinner)view.findViewById(R.id.spinner_ruleset_select);
         rulesetSelector.setOnItemSelectedListener(this);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.spinner_item, dataStore.getArrayOfEntryNames());
-        rulesetSelector.setAdapter(adapter);
 
-        view.findViewById(R.id.backtostart_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //NavHostFragment.findNavController(RuleSet.this).navigate(R.id.action_RuleSets_to_StartPage);
-                NavHostFragment.findNavController(RulesetFragment.this).popBackStack(R.id.StartPage, false);
-            }
-        });
+        refreshRulesetSpinner();
 
-        view.findViewById(R.id.fab_addentry).setOnClickListener(this::onNewRulesetWindowButtonClick);
-        view.findViewById(R.id.fab_removeentry).setOnClickListener(this::onRemoveRulesetButtonClick);
+        view.findViewById(R.id.backtostart_button).setOnClickListener(this::onBackToStartButtonClick);
+        view.findViewById(R.id.fab_addruleset).setOnClickListener(this::onNewRulesetWindowButtonClick);
+        view.findViewById(R.id.fab_removeruleset).setOnClickListener(this::onRemoveRulesetButtonClick);
+
+        newRulesetWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        newRulesetWindow.setElevation(20);
+        ruleModifyWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        ruleModifyWindow.setElevation(20);
+    }
+
+    private void onBackToStartButtonClick(View view) {
+        NavHostFragment.findNavController(RulesetFragment.this).popBackStack(R.id.StartPage, false);
     }
 
     private void onRemoveRulesetButtonClick(View view) {
+        LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View removeRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_remove, null);
 
+        removeRulesetWindow.setContentView(removeRulesetView);
+        removeRulesetWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        removeRulesetView.findViewById(R.id.removeruleset_button).setOnClickListener(this::onDeleteRulesetButtonClick);
     }
 
-    public void onNewRulesetWindowButtonClick(View v) {
-        dataStore.refresh(getContext());
+    private void onDeleteRulesetButtonClick(View view) {
+        if (dataStore.getSelected() != null) {
+            dataStore.removeEntry(dataStore.getSelected());
+            dataStore.refresh(getContext());
+        }
+        removeRulesetWindow.dismiss();
+        refreshRulesetSpinner();
+    }
 
+    private void onNewRulesetWindowButtonClick(View v) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View newRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_create, null);
 
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(newRulesetView, width, height, focusable);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        popupWindow.setElevation(20);
-        popupWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
+        newRulesetWindow.setContentView(newRulesetView);
+        newRulesetWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        newRulesetView.findViewById(R.id.createruleset_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onCreateRulesetButtonClick(v, popupWindow);
-            }
-        });
+        newRulesetView.findViewById(R.id.createruleset_button).setOnClickListener(this::onCreateRulesetButtonClick);
     }
 
-    public void onCreateRulesetButtonClick(View v, PopupWindow p) {
-        EditText e = (EditText) (p.getContentView().findViewById(R.id.ruleset_name_edittext));
+    public void onCreateRulesetButtonClick(View v) {
+        EditText e = (EditText) (newRulesetWindow.getContentView().findViewById(R.id.ruleset_name_edittext));
         RulesetEntry newset = new RulesetEntry.RulesetEntryBuilder(e.getText().toString()).build();
         dataStore.setEntry(newset);
         refreshRulesetSpinner();
         dataStore.refresh(getContext());
-        p.dismiss();
+        newRulesetWindow.dismiss();
     }
 
-    public void onModifyRuleButtonClick(View v, PopupWindow p, int rule) {
-        EditText e = (EditText) (p.getContentView().findViewById(R.id.rule_new_edittext));
+    public void onModifyRuleButtonClick(View v, int rule) {
+        EditText e = (EditText) (ruleModifyWindow.getContentView().findViewById(R.id.rule_new_edittext));
         Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
             ((RulesetEntry.Rule)r).setInfo(e.getText().toString());
@@ -109,7 +118,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         dataStore.markModified(dataStore.getSelected().getName());
         dataStore.refresh(getContext());
         refreshRulesetDisplaySet();
-        p.dismiss();
+        ruleModifyWindow.dismiss();
     }
 
     public void refreshRulesetSpinner() {
@@ -127,21 +136,18 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
     private boolean onRuleLongPress(View view, int rule) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View ruleModify = inflater.inflate(R.layout.popupwindow_rule_modify, null);
+
         Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
             ((TextView)ruleModify.findViewById(R.id.rulemodify_name_textview)).setText(((RulesetEntry.Rule)r).getName());
         }
-        int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-        int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-        boolean focusable = true; // lets taps outside the popup also dismiss it
-        final PopupWindow popupWindow = new PopupWindow(ruleModify, width, height, focusable);
-        popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-        popupWindow.setElevation(20);
-        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        ruleModifyWindow.setContentView(ruleModify);
+        ruleModifyWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
         ruleModify.findViewById(R.id.modifyrule_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onModifyRuleButtonClick(v, popupWindow, rule);
+                onModifyRuleButtonClick(v, rule);
             }
         });
         return true;
@@ -169,7 +175,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         @NonNull
         @Override
         public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.ruleset_display_item, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_item, parent, false);
             return new ViewHolder(v);
         }
 
