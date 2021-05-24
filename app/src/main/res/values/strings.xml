@@ -30,6 +30,7 @@
     <string name="label_rulesetremove_title">Remove Ruleset?</string>
     <string name="button_rulesetremove_remove">Remove</string>
     <!-- Strings for Team page -->
+    <string name="button_team_filter">Filter</string>
     <string name="label_playerinfo_name">Name</string>
     <string name="label_playerinfo_number">Number</string>
     <string name="label_playerinfo_birthday">Birthday</string>
@@ -39,6 +40,8 @@
     <!-- Strings for Team Popup Windows -->
     <string name="label_playercreate_title">Create New Player</string>
     <string name="label_teamcreate_title">Create New Team</string>
+    <string name="label_playertransfer_title">Transfer Player</string>
+    <string name="label_teamfilter_title">Filter Teams</string>
     <string name="hint_teamcreate_name">Team Name</string>
     <string name="hint_playercreate_name">Player Name</string>
     <string name="hint_playercreate_number">Player Number</string>
@@ -47,4 +50,5 @@
     <string name="radiobutton_playercreate_right">Right</string>
     <string name="label_playerremove_title">Remove Player?</string>
     <string name="label_teamremove_title">Remove Team?</string>
+    <string name="label_playertransfer_transfer">Transfer</string>
 </resources>

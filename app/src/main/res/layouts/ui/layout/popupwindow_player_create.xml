@@ -76,10 +76,11 @@
         android:text="@string/checkbox_playercreate_goalie" />
 
     <Spinner
-        android:id="@+id/team_spinner"
+        android:id="@+id/spinner_team_assign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:spinnerMode="dialog" />
 
     <Button
         android:id="@+id/createplayer_button"

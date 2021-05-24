@@ -2,7 +2,9 @@ package com.cmat.wpca.data;
 
 import android.content.Context;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class DataStore <T extends IEntry> {
@@ -16,6 +18,8 @@ public class DataStore <T extends IEntry> {
     Class<T> entryClass;
 
     String selected;
+
+    ArrayList<String> selectedArray = new ArrayList<>();
 
     boolean loaded;
     boolean modified;
@@ -94,12 +98,41 @@ public class DataStore <T extends IEntry> {
     public String[] getArrayOfEntryNames() {
         String[] s;
         if (data.size() == 0) {
-            s = new String[] { "No Data found"};
+            //s = new String[] { "No Data found"};
+            s = new String[] {};
             return s;
         } else {
             s = new String[data.keySet().size()];
             return data.keySet().toArray(s);
         }
+    }
+
+    public String[] getArrayOfEntryNames(boolean includeNone) {
+        String[] s;
+        if (!includeNone) {
+            return getArrayOfEntryNames();
+        }
+        if (data.size() == 0) {
+            s = new String[] { "none"};
+        } else {
+            String[] t = new String[data.keySet().size()];
+            s = new String[data.keySet().size() + 1];
+            s[0] = "none";
+            System.arraycopy(data.keySet().toArray(t), 0, s, 1, data.keySet().size());
+        }
+        return s;
+    }
+
+    public int getCount() {
+        return data.size();
+    }
+
+    public void setSelected(ArrayList<String> selected) {
+        this.selectedArray = selected;
+    }
+
+    public void setSelected(String[] selected) {
+        this.selectedArray = new ArrayList<String>(Arrays.asList(selected));
     }
 
     public void setSelected(String selected) {
@@ -108,5 +141,13 @@ public class DataStore <T extends IEntry> {
 
     public T getSelected() {
         return getEntry(selected);
+    }
+
+    public ArrayList<T> getSelectedArray() {
+        ArrayList<T> ret = new ArrayList<>();
+        for (String s : selectedArray) {
+            ret.add(getEntry(s));
+        }
+        return ret;
     }
 }

@@ -7,22 +7,71 @@
     tools:context=".fragments.GameSetupFragment">
 
     <TextView
-        android:id="@+id/teampagetitle_textview"
+        android:id="@+id/gamesetuptitle_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/label_gamesetup_title"
-        app:layout_constraintBottom_toTopOf="@id/backtostart_button"
+        android:textSize="44sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/gamesetup_rules_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gamesetuptitle_textview" />
+
+    <Spinner
+        android:id="@+id/gamesetup_team_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gamesetup_rules_spinner" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playerselection_recyclerview"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gamesetup_team_spinner" />
+
+    <Button
+        android:id="@+id/gamesetup_go_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Setup"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerselection_recyclerview" />
+
+    <Button
+        android:id="@+id/continuegame_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Continue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/gamesetup_go_button" />
 
     <Button
         android:id="@+id/backtostart_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="prev"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="30dp"
+        android:text="@string/button_navigation_startpage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teampagetitle_textview" />
+        app:layout_constraintTop_toBottomOf="@id/continuegame_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

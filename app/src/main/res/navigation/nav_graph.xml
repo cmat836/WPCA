@@ -32,6 +32,17 @@
         <action
             android:id="@+id/action_GameRecordtoStartPage"
             app:destination="@id/StartPage" />
+        <argument
+            android:name="teamName"
+            app:argType="string"
+            android:defaultValue="none" />
+        <argument
+            android:name="rulesetName"
+            app:argType="string"
+            android:defaultValue="none" />
+        <argument
+            android:name="selectedPlayers"
+            app:argType="string[]" />
     </fragment>
     <fragment
         android:id="@+id/TeamPage"

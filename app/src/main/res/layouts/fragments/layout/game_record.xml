@@ -6,23 +6,223 @@
     android:layout_height="match_parent"
     tools:context=".fragments.GameRecordFragment">
 
-    <TextView
-        android:id="@+id/teampagetitle_textview"
-        android:layout_width="wrap_content"
+    <TableLayout
+        android:id="@+id/control_table"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/backtostart_button"
+        app:layout_constraintBottom_toTopOf="@+id/action_table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/label_gamerecord_title"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/backtostart_button"
-        android:layout_width="wrap_content"
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/quarter_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="Quarter" />
+
+            <TextView
+                android:id="@+id/score_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCORE"
+                android:textAlignment="center"
+                android:textSize="21sp" />
+
+            <Button
+                android:id="@+id/oppgoal_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="Opp goal" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/uneven_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="Uneven" />
+
+            <ToggleButton
+                android:id="@+id/possesion_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textOff="HOME"
+                android:textOn="AWAY" />
+
+            <Button
+                android:id="@+id/timeout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="Timeout" />
+
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/action_table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@+id/replay_table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/control_table">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/player1_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="Player1"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/player2_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="Player2"
+                android:textSize="25sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/player3_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="player3"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/player4_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="player4"
+                android:textSize="25sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/player5_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="player5"
+                android:textSize="25sp" />
+
+            <Button
+                android:id="@+id/player6_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="player6"
+                android:textSize="25sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center|center_horizontal">
+
+            <Button
+                android:id="@+id/player7_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="2dp"
+                android:insetRight="2dp"
+                android:minHeight="100dp"
+                android:text="player7"
+                android:textSize="25sp" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/replay_table"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="prev"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teampagetitle_textview" />
+        app:layout_constraintTop_toBottomOf="@id/action_table">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/replay_playernumber_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14"
+                android:textSize="25sp" />
+
+            <TextView
+                android:id="@+id/replay_event_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SCORE GOAL BIG"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/replay_timestamp_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1m36s" />
+
+            <Button
+                android:id="@+id/notableplay_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="Noteable" />
+        </TableRow>
+    </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,6 +22,7 @@ public class TeamEntry implements IEntry {
     }
 
     public void addPlayer(String name) {
+        playerNames.remove(name);
         playerNames.add(name);
     }
 

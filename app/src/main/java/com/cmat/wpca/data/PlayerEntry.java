@@ -2,6 +2,7 @@ package com.cmat.wpca.data;
 
 import com.google.gson.Gson;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,7 +12,7 @@ public class PlayerEntry implements IEntry {
     String birthday;
     Handedness handedness;
     boolean isGoalie;
-    int number;
+    String number;
 
     ArrayList<String> teams;
 
@@ -20,7 +21,8 @@ public class PlayerEntry implements IEntry {
         birthday = "0/0/0";
         handedness = Handedness.RIGHT;
         isGoalie = false;
-        number = 0;
+        number = "0";
+        teams = new ArrayList<>();
     }
 
     public String getBirthday() {
@@ -47,11 +49,11 @@ public class PlayerEntry implements IEntry {
         isGoalie = goalie;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
@@ -60,7 +62,12 @@ public class PlayerEntry implements IEntry {
     }
 
     public void addTeam(String name) {
+        teams.remove(name);
         teams.add(name);
+    }
+
+    public void setTeams(ArrayList<String> team) {
+        teams = team;
     }
 
     public void removeTeam(String name) {
@@ -71,6 +78,10 @@ public class PlayerEntry implements IEntry {
         ArrayList<String> r = new ArrayList<>();
         r.addAll(teams);
         return r;
+    }
+
+    public boolean hasTeam() {
+        return !teams.isEmpty();
     }
 
     @Override
@@ -93,15 +104,15 @@ public class PlayerEntry implements IEntry {
         String birthday;
         Handedness handedness = Handedness.RIGHT;
         boolean isGoalie = false;
-        int number = 0;
+        String number = "0";
 
-        public PlayerBuilder(String name, int number) {
+        public PlayerBuilder(String name, String number) {
             this.name = name;
             this.number = number;
             birthday = "0/0/0";
         }
 
-        public PlayerBuilder(String name, int number, String birthday) {
+        public PlayerBuilder(String name, String number, String birthday) {
             this.name = name;
             this.number = number;
             this.birthday = birthday;
@@ -117,8 +128,8 @@ public class PlayerEntry implements IEntry {
             return this;
         }
 
-        public PlayerBuilder setGoalie() {
-            this.isGoalie = true;
+        public PlayerBuilder setGoalie(boolean goalie) {
+            this.isGoalie = goalie;
             return this;
         }
 
