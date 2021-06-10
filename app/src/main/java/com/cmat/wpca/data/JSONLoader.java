@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.cmat.wpca.data.entry.IEntry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

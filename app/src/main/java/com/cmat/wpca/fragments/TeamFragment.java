@@ -13,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -28,10 +27,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
-import com.cmat.wpca.data.PlayerEntry;
-import com.cmat.wpca.data.TeamEntry;
+import com.cmat.wpca.data.entry.PlayerEntry;
+import com.cmat.wpca.data.entry.TeamEntry;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class TeamFragment extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -339,7 +337,7 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
         }
 
         @Override
-        public void onBindViewHolder(@NonNull TeamFragment.CheckboxViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull CheckboxViewHolder holder, int position) {
             String name = context.teamData.getEntry(context.teamData.getArrayOfEntryNames()[position]).getName();
             holder.getNameText().setText(name);
             if (tempList.contains(name)) {
@@ -504,44 +502,5 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
             return 6;
         }
 
-    }
-
-
-    public static class InfoViewHolder extends RecyclerView.ViewHolder {
-        private final TextView nameText;
-        private final TextView infoText;
-
-        public InfoViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nameText = (TextView) itemView.findViewById(R.id.textViewName);
-            infoText = (TextView) itemView.findViewById(R.id.textViewInfo);
-        }
-
-        public TextView getNameText() {
-            return nameText;
-        }
-
-        public TextView getInfoText() {
-            return infoText;
-        }
-    }
-
-    public static class CheckboxViewHolder extends RecyclerView.ViewHolder {
-        private final TextView nameText;
-        private final CheckBox checkbox;
-
-        public CheckboxViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nameText = (TextView) itemView.findViewById(R.id.textViewName);
-            checkbox = (CheckBox) itemView.findViewById(R.id.checkboxbox);
-        }
-
-        public TextView getNameText() {
-            return nameText;
-        }
-
-        public CheckBox getInfoText() {
-            return checkbox;
-        }
     }
 }

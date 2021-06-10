@@ -2,7 +2,8 @@ package com.cmat.wpca.data;
 
 import android.content.Context;
 
-import java.lang.reflect.Array;
+import com.cmat.wpca.data.entry.IEntry;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

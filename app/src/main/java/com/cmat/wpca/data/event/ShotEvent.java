@@ -1,8 +1,12 @@
-package com.cmat.wpca.data;
+package com.cmat.wpca.data.event;
 
-public class ShotEvent  implements IGameEvent {
+import com.cmat.wpca.data.entry.PlayerEntry;
+import com.cmat.wpca.data.event.IGameEvent;
+
+public class ShotEvent  extends IGameEvent {
     public ShotType type;
     public PlayerEntry player;
+    public boolean isPenalty = false;
 
     public ShotEvent(ShotType type, PlayerEntry player) {
         this.type = type;
@@ -17,11 +21,6 @@ public class ShotEvent  implements IGameEvent {
     @Override
     public PlayerEntry getPlayer() {
         return player;
-    }
-
-    @Override
-    public long getTime() {
-        return 0;
     }
 
     public enum ShotType {

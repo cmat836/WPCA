@@ -1,8 +1,5 @@
-package com.cmat.wpca.data;
+package com.cmat.wpca.data.entry;
 
-import com.google.gson.Gson;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 

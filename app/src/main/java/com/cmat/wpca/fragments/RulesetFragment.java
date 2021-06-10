@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
-import com.cmat.wpca.data.RulesetEntry;
+import com.cmat.wpca.data.entry.RulesetEntry;
 
 public class RulesetFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     DataStore<RulesetEntry> dataStore = new DataStore<>("rulesets", RulesetEntry.class);

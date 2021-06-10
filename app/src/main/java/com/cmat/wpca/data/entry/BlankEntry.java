@@ -1,6 +1,4 @@
-package com.cmat.wpca.data;
-
-import com.google.gson.Gson;
+package com.cmat.wpca.data.entry;
 
 public class BlankEntry implements IEntry {
     public static BlankEntry blankEntry = new BlankEntry();

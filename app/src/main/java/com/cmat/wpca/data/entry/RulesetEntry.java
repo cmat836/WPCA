@@ -1,8 +1,5 @@
-package com.cmat.wpca.data;
+package com.cmat.wpca.data.entry;
 
-import com.google.gson.Gson;
-
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 public class RulesetEntry implements IEntry {

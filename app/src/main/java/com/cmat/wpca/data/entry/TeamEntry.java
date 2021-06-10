@@ -1,4 +1,4 @@
-package com.cmat.wpca.data;
+package com.cmat.wpca.data.entry;
 
 import java.util.ArrayList;
 

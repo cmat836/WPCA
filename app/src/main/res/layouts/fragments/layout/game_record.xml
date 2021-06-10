@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Quarter" />
+                android:text="Pregame" />
 
             <TextView
                 android:id="@+id/score_textview"
@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textOff="HOME"
-                android:textOn="AWAY" />
+                android:textOn="OPP" />
 
             <Button
                 android:id="@+id/timeout_button"
@@ -73,6 +73,18 @@
                 android:insetRight="10dp"
                 android:text="Timeout" />
 
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/timer_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="TextView" />
         </TableRow>
 
     </TableLayout>

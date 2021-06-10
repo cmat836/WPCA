@@ -1,0 +1,21 @@
+-opp goal
+-review
+-uneven -on/off
+-scoreboard
+-noteable
+-uneven and timeout button, flash every 5 seconds
+-time show when uneven or timeout
+-possession toggle
+-brutality, misconduct and exclusion, trigger uneven
+-track exclusions on players
+-uneven triggerd = self, manual triggerd = them
+
+quarter button
+-trigger quarter mode
+-mass sub
+-pause time
+-swimoff starts quarter
+-after final quarter close button 
+
+
+

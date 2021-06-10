@@ -20,9 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
-import com.cmat.wpca.data.PlayerEntry;
-import com.cmat.wpca.data.RulesetEntry;
-import com.cmat.wpca.data.TeamEntry;
+import com.cmat.wpca.data.entry.PlayerEntry;
+import com.cmat.wpca.data.entry.RulesetEntry;
+import com.cmat.wpca.data.entry.TeamEntry;
 
 import java.util.ArrayList;
 
