@@ -208,25 +208,43 @@
             android:layout_height="match_parent"
             android:gravity="center">
 
-            <TextView
-                android:id="@+id/replay_playernumber_textview"
+            <Button
+                android:id="@+id/review_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14"
-                android:textSize="25sp" />
+                android:insetLeft="10dp"
+                android:insetRight="10dp"
+                android:text="^" />
 
-            <TextView
-                android:id="@+id/replay_event_textview"
+            <LinearLayout
+                android:id="@+id/replay_container"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SCORE GOAL BIG"
-                android:textSize="18sp" />
+                android:layout_height="match_parent"
+                android:longClickable="true"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/replay_timestamp_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1m36s" />
+                <TextView
+                    android:id="@+id/replay_playernumber_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="14"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/replay_event_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SCORE GOAL BIG"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/replay_timestamp_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1m36s" />
+            </LinearLayout>
+
+
 
             <Button
                 android:id="@+id/notableplay_button"
@@ -234,7 +252,7 @@
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Noteable" />
+                android:text="*" />
         </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

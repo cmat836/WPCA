@@ -69,7 +69,10 @@ quarter button
 
 -Goalie always bottom
 
-
+-BIG UNDO ON LONG PRESS
+    -Set up gameevents to have apply and undo functions in interface
+    -Functions recieve a Game instance and need to use only that to perform actions
+    -Timers must be moved into Game and abstraction provided
  */
 
 
@@ -148,6 +151,9 @@ public class GameRecordFragment extends Fragment {
         getButton(R.id.uneven_button).setOnClickListener(this::unevenButton_Pressed);
         getButton(R.id.quarter_button).setOnLongClickListener(this::quarterButton_Pressed);
         getButton(R.id.timeout_button).setOnClickListener(this::timeoutButton_Pressed);
+        getButton(R.id.review_button).setOnClickListener(this::reviewButton_Pressed);
+
+        getView().findViewById(R.id.replay_container).setOnLongClickListener(this::replayContainer_LongPressed);
 
         playerButtons.add(getButton(R.id.player1_button));
         playerButtons.add(getButton(R.id.player2_button));
@@ -168,6 +174,16 @@ public class GameRecordFragment extends Fragment {
             playerButtons.get(i).setText(Players.getEntry(selectedPlayers.get(i)).getName());
         }
 
+
+    }
+
+    private boolean replayContainer_LongPressed(View view) {
+        game.GameEvents.remove(getMostRecentEvent());
+        refreshReplayTable();
+        return false;
+    }
+
+    private void reviewButton_Pressed(View view) {
 
     }
 

@@ -2,7 +2,7 @@ package com.cmat.wpca.data.event;
 
 import com.cmat.wpca.data.entry.PlayerEntry;
 
-public class GenericPlayerEvent extends IGameEvent {
+public class GenericPlayerEvent extends BaseGameEvent {
     public GenericEventType type;
     public PlayerEntry player;
 

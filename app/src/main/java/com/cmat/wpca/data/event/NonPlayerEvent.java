@@ -3,7 +3,7 @@ package com.cmat.wpca.data.event;
 import com.cmat.wpca.data.entry.PlayerEntry;
 import com.cmat.wpca.data.event.IGameEvent;
 
-public class NonPlayerEvent extends IGameEvent {
+public class NonPlayerEvent extends BaseGameEvent {
     NonPlayerEventType type;
 
     public NonPlayerEvent(NonPlayerEventType type) {
