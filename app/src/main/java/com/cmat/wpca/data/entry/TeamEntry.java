@@ -36,6 +36,7 @@ public class TeamEntry implements IEntry {
         return r;
     }
 
+
     @Override
     public String getName() {
         return name;

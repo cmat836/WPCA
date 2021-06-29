@@ -1,6 +1,5 @@
 package com.cmat.wpca.data.event;
 
-import com.cmat.wpca.data.Game;
 import com.cmat.wpca.data.entry.PlayerEntry;
 
 import java.util.ArrayList;

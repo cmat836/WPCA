@@ -1,10 +1,19 @@
 package com.cmat.wpca.data.event;
 
+import androidx.navigation.NavBackStackEntry;
+
 import com.cmat.wpca.data.entry.PlayerEntry;
 
+import java.util.ArrayList;
+
+/**
+ * abstract IGameEvent implementation with implementation for time, notability and player,
+ * all implemented get's return default non-null values
+ */
 public abstract class BaseGameEvent implements IGameEvent {
     boolean notable = false;
-    long time;
+    long time = 0L;
+    protected PlayerEntry primaryPlayer = (PlayerEntry) new PlayerEntry().getNull(); // Blank player
 
     @Override
     public void setTime(long time) {
@@ -24,5 +33,17 @@ public abstract class BaseGameEvent implements IGameEvent {
     @Override
     public void setNotable(boolean notable) {
         this.notable = notable;
+    }
+
+    @Override
+    public PlayerEntry getPlayer() {
+        return primaryPlayer;
+    }
+
+    @Override
+    public ArrayList<PlayerEntry> getPlayers() {
+        ArrayList<PlayerEntry> ret = new ArrayList<>();
+        ret.add(primaryPlayer);
+        return ret;
     }
 }
