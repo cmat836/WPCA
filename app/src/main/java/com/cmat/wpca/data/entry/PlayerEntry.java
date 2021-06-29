@@ -3,6 +3,7 @@ package com.cmat.wpca.data.entry;
 import java.util.ArrayList;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 public class PlayerEntry implements IEntry {
     String name;
 
@@ -72,9 +73,7 @@ public class PlayerEntry implements IEntry {
     }
 
     public ArrayList<String> getTeamList() {
-        ArrayList<String> r = new ArrayList<>();
-        r.addAll(teams);
-        return r;
+        return new ArrayList<>(teams);
     }
 
     public boolean hasTeam() {
@@ -101,7 +100,7 @@ public class PlayerEntry implements IEntry {
         String birthday;
         Handedness handedness = Handedness.RIGHT;
         boolean isGoalie = false;
-        String number = "0";
+        String number;
 
         public PlayerBuilder(String name, String number) {
             this.name = name;

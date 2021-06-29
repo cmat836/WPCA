@@ -2,6 +2,7 @@ package com.cmat.wpca.data.entry;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 public class RulesetEntry implements IEntry {
     String name;
     String parentName;

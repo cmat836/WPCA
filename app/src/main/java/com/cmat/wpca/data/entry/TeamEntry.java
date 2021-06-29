@@ -2,6 +2,7 @@ package com.cmat.wpca.data.entry;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("unused")
 public class TeamEntry implements IEntry {
     String name;
     String description;
@@ -31,9 +32,7 @@ public class TeamEntry implements IEntry {
     }
 
     public ArrayList<String> getNameList() {
-        ArrayList<String> r = new ArrayList<>();
-        r.addAll(playerNames);
-        return r;
+        return new ArrayList<>(playerNames);
     }
 
 

@@ -208,7 +208,7 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
 
         addPlayerView.findViewById(R.id.createplayer_button).setOnClickListener(this::onPlayerCreated);
         Spinner team = (Spinner)addPlayerView.findViewById(R.id.spinner_team_assign);
-        team.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, teamData.getArrayOfEntryNames(true)));
+        team.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.spinner_item, teamData.getArrayOfEntryNames()));
     }
 
     private void onTeamCreated(View view) {
