@@ -8,7 +8,7 @@ import com.cmat.wpca.data.StringUtil;
  * Event triggered when the opposition loses or gains a player
  */
 public class OppositionPlayerChangeEvent extends BaseGameEvent {
-    ChangeType type = ChangeType.GAINED;
+    ChangeType type;
     Consumer<Long> UICallback;
 
     public OppositionPlayerChangeEvent(ChangeType type, Consumer<Long> UICallback) {
@@ -41,6 +41,6 @@ public class OppositionPlayerChangeEvent extends BaseGameEvent {
 
     public enum ChangeType {
         GAINED,
-        LOST;
+        LOST
     }
 }

@@ -33,6 +33,6 @@ public class StatisticEvent extends BaseGameEvent {
         BLOCKED,
         MISS,
         BLOCK,
-        BADPASS;
+        BADPASS
     }
 }

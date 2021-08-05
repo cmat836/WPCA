@@ -15,9 +15,10 @@ import java.util.Map;
  * Uses ScheduledTask's to package task functions with their time information.
  * See documentation on addTask() and start()/stop()/pause()/resume() for usage details
  */
+@SuppressWarnings("unused")
 public class TaskTimer {
     boolean paused = true;
-    int rate = 100; // How often between executions
+    int rate; // How often between executions
 
     long startTime = 0L; // System time (.uptimeMillis) the timer started at
     long pausedTime = 0L;  // Elapsed time while the timer is paused
@@ -31,6 +32,14 @@ public class TaskTimer {
      */
     public TaskTimer(int rate) {
         this.rate = rate;
+    }
+
+    /**
+     * Restore a tasktimer from its saved state
+     * @param state
+     */
+    public TaskTimer(TaskTimerState state) {
+
     }
 
     /**
@@ -82,7 +91,7 @@ public class TaskTimer {
 
     /**
      * Removes a task with the specified ID from the schedule, preventing any further execution
-     * @param taskName
+     * @param taskName the name of the task to remove
      */
     public void removeTask(String taskName) {
         tasks.remove(taskName);
@@ -187,8 +196,8 @@ public class TaskTimer {
      * Converts millisecond time into a human readable format <br /><br />
      * If below 1min, displays like 0.345, 1.345, 23.45 <br /><br />
      * if above 1min, displays like 2:05, 2:45, 12:23
-     * @param millis
-     * @return
+     * @param millis the time to convert
+     * @return the time converted to string format
      */
     public static String millisToString(long millis) {
         long t = millis;
@@ -202,16 +211,18 @@ public class TaskTimer {
         return m + ":" + (s < 10 ? "0" : "") + s;
     }
 
+    public TaskTimerState getState() {
+        return new TaskTimerState(this);
+    }
+
     /**
      * A Wrapper around a task, stores the tasks function(s) and its timer data. Handles the running of the task, shouldn't need to be interacted with directly
      */
     private static class ScheduledTask {
         final Consumer<Long> task; // The repeatable task
-        Consumer<Long> end = new Consumer<Long>() { // The final task
-            @Override
-            public void accept(Long aLong) {
+        // The final task
+        Consumer<Long> end = aLong -> {
 
-            }
         };
         final long interval; // -1 to not run task
         final long endTime; // -1 for undetermined duration
@@ -219,7 +230,7 @@ public class TaskTimer {
         final boolean relativeTime; // if false millis passed to the task will be from the start of the timer
         //If true millis passed to the task will be from when the task started
 
-        long lastCalled = 0L; // The timer time when the task last ran
+        long lastCalled; // The timer time when the task last ran
 
         /**
          * Create a new Scheduled Task with the following properties
@@ -281,11 +292,8 @@ public class TaskTimer {
          * @param end the function to run when the duration finishes
          */
         public ScheduledTask(boolean relTime, long startTime, long duration, Consumer<Long> end) {
-            this.task = new Consumer<Long>() {
-                @Override
-                public void accept(Long aLong) {
+            this.task = aLong -> {
 
-                }
             };
             this.interval = -1L;
             this.startTime = startTime;
@@ -295,6 +303,10 @@ public class TaskTimer {
             this.relativeTime = relTime;
         }
 
+        /**
+         * Gets the tasks function
+         * @return the function
+         */
         public Consumer<Long> getTask() {
             return task;
         }
@@ -307,7 +319,12 @@ public class TaskTimer {
             return endTime;
         }
 
-        // return true if continuing, false if finished
+        /**
+         * Attempt to run the task, will run if enough time has elapsed since its previous call,
+         * also check if the task has expired and return false if it has
+         * @param millis milliseconds since game start
+         * @return return true if continuing, false if finished
+         */
         public boolean doRun(long millis) {
             // If task is running on relative time, millis will be since the task was started not from when the timer was started
             long relMillis = relativeTime ? millis - startTime : millis;
@@ -321,7 +338,26 @@ public class TaskTimer {
             }
             return true; // Tell the timer to keep this task
         }
+    }
 
+    /**
+     * Container class to store the state of the timer for saving and restoring, immutable
+     */
+    public static class TaskTimerState {
+        private final boolean paused;
+        private final int rate; // How often between executions
 
+        private final long startTime; // System time (.uptimeMillis) the timer started at
+        private final long pausedTime;  // Elapsed time while the timer is paused
+
+        private final long stateSaveTime; // System time when the timer was saved
+
+        private TaskTimerState(TaskTimer taskTimer) {
+            this.paused = taskTimer.paused;
+            this.rate = taskTimer.rate;
+            this.startTime = taskTimer.startTime;
+            this.pausedTime = taskTimer.pausedTime;
+            this.stateSaveTime = SystemClock.uptimeMillis();
+        }
     }
 }

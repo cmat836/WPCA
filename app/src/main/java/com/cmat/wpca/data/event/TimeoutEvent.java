@@ -8,7 +8,7 @@ import com.cmat.wpca.data.StringUtil;
  * Event triggered at the beginning or end of a timeout, during a timeout the timeout timer counts up but the game time is paused
  */
 public class TimeoutEvent extends BaseGameEvent {
-    TimeoutState state = TimeoutState.START;
+    TimeoutState state;
     Consumer<Long> UICallback;
 
     /**
@@ -49,6 +49,6 @@ public class TimeoutEvent extends BaseGameEvent {
 
     public enum TimeoutState {
         START,
-        END;
+        END
     }
 }

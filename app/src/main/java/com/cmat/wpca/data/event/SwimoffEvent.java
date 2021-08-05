@@ -56,6 +56,6 @@ public class SwimoffEvent extends BaseGameEvent {
 
     public enum SwimoffResult {
         WIN,
-        LOSS;
+        LOSS
     }
 }

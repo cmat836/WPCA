@@ -1,7 +1,5 @@
 package com.cmat.wpca.data.event;
 
-import androidx.navigation.NavBackStackEntry;
-
 import com.cmat.wpca.data.entry.PlayerEntry;
 
 import java.util.ArrayList;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 public abstract class BaseGameEvent implements IGameEvent {
     boolean notable = false;
     long time = 0L;
-    protected PlayerEntry primaryPlayer = (PlayerEntry) new PlayerEntry().getNull(); // Blank player
+    protected PlayerEntry primaryPlayer = PlayerEntry.PlayerBuilder.getBlankPlayer(); // Blank player
 
     @Override
     public void setTime(long time) {

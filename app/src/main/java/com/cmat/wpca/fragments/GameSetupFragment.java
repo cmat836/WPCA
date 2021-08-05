@@ -1,8 +1,10 @@
 package com.cmat.wpca.fragments;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -110,7 +112,7 @@ public class GameSetupFragment extends Fragment {
         @Override
         public SelectableViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
             View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.selectable_item, parent, false);
-            return new SelectableViewHolder(v);
+            return new SelectableViewHolder(v, context.getContext());
         }
 
         @Override
@@ -173,20 +175,30 @@ public class GameSetupFragment extends Fragment {
         private final TextView infoText;
         private final FrameLayout layout;
 
+        private Context context;
+
         private boolean selected;
 
-        public SelectableViewHolder(@NonNull View itemView) {
+        public SelectableViewHolder(@NonNull View itemView, Context c) {
             super(itemView);
             nameText = (TextView) itemView.findViewById(R.id.textViewName);
             infoText = (TextView) itemView.findViewById(R.id.textViewInfo);
             layout = (FrameLayout) itemView.findViewById(R.id.selectable_layout);
             selected = false;
+            context = c;
         }
 
         public void setSelected(boolean selected) {
+            TypedValue typedValue = new TypedValue();
+            context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+            int backgroundcolor = typedValue.data;
+            context.getTheme().resolveAttribute(R.attr.colorSecondary, typedValue, true);
+            int selectedcolor = typedValue.data;
+
+
             getLayout().setSelected(selected);
             this.selected = selected;
-            getLayout().setBackground(selected ? new ColorDrawable((Color.BLUE)) : new ColorDrawable((Color.WHITE)));
+            getLayout().setBackground(selected ? new ColorDrawable((selectedcolor)) : new ColorDrawable((backgroundcolor)));
 
         }
 

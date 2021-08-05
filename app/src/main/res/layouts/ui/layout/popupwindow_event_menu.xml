@@ -45,7 +45,7 @@
         android:id="@+id/blank_button"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="#ED0909"
+        android:backgroundTint="?attr/colorAlert"
         android:insetLeft="6dp"
         android:insetRight="6dp"
         android:text="Whoops"

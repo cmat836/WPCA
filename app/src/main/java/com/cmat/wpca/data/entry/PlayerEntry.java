@@ -138,5 +138,9 @@ public class PlayerEntry implements IEntry {
             built.number = number;
             return built;
         }
+
+        public static PlayerEntry getBlankPlayer() {
+            return (PlayerEntry) new PlayerEntry().getNull();
+        }
     }
 }

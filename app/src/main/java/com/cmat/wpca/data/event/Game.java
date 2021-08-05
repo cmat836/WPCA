@@ -3,11 +3,12 @@ package com.cmat.wpca.data.event;
 import androidx.core.util.Consumer;
 
 import com.cmat.wpca.data.TaskTimer;
+import com.cmat.wpca.data.entry.GameEntry;
 import com.cmat.wpca.data.entry.PlayerEntry;
-import com.cmat.wpca.data.event.IGameEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * A structure for storing all the data associated with a single game of waterpolo,
@@ -17,6 +18,7 @@ import java.util.HashMap;
  * this structure should only be interacted with via IGameEvents passed to it <br><br>
  * The game starts paused in the PREGAME state, calling Game.start() will put it into Q1 and start the game timer
  */
+@SuppressWarnings("unused")
 public class Game {
     int homeGoals = 0;
     int oppGoals = 0;
@@ -107,8 +109,8 @@ public class Game {
     /**
      * Returns if the events passed is the most recent of its type, this is for checking if another event
      * has already overwritten its effect for the purpose of removing events
-     * @param event
-     * @return
+     * @param event The event to check
+     * @return whether this is the most recent of this event
      */
     public boolean isMostRecentOfEvent(IGameEvent event) {
         Class<? extends IGameEvent> c = event.getClass();
@@ -202,6 +204,12 @@ public class Game {
         return oppPoolPlayers != 7;
     }
 
+    public GameEntry buildEntry(String name) {
+        return new GameEntry.GameEntryBuilder(name, homeGoals, oppGoals, homePoolPlayers, oppPoolPlayers)
+                .possession(possession).state(isTimeout, isQuarterBreak, quarter, gameTime.getState(), timeoutTime.getState())
+                .players(players, selectedPlayers).events(eventRegistry).build();
+    }
+
     /**
      * Get all the (home) players in the game
      * @return a list of all players in the game
@@ -234,7 +242,7 @@ public class Game {
                 return p.getPlayer();
             }
         }
-        return (PlayerEntry) new PlayerEntry().getNull();
+        return (PlayerEntry) PlayerEntry.PlayerBuilder.getBlankPlayer().getNull();
     }
 
     /********************************************
@@ -271,7 +279,7 @@ public class Game {
 
     /**
      * Adds a new indefinite task to timeout timer
-     * @param task
+     * @param task the task
      */
     protected void addTimeoutTask(Consumer<Long> task) {
         timeoutTime.addTask("timeout", true, task, 200L);
@@ -286,8 +294,8 @@ public class Game {
 
     /**
      * Adds a new indefinite task to the game timer
-     * @param taskName
-     * @param task
+     * @param taskName name of the task to add
+     * @param task the task
      */
     protected void addGameTask(String taskName, Consumer<Long> task) {
         gameTime.addTask(taskName, true, task, 200L);
@@ -309,7 +317,7 @@ public class Game {
      * Selects the player to be either selected or not
      */
     public void setPlayerSelected(PlayerEntry player, boolean selected) {
-        players.get(player).setSelected(selected);
+        Objects.requireNonNull(players.get(player)).setSelected(selected);
     }
 
     public void excludePlayer(PlayerEntry player, int duration) {
@@ -330,8 +338,8 @@ public class Game {
     /**
      * Container for a player in the game, stores information about exclusions, substitutions and other transient data
      */
-    class Player {
-        PlayerEntry player = (PlayerEntry) new PlayerEntry().getNull();
+    public class Player {
+        PlayerEntry player;
 
         int exclusions = 0;
         boolean selected = false; // Is the player currently playing
@@ -383,7 +391,7 @@ public class Game {
     public enum Team {
         NEITHER,
         HOME,
-        OPPOSITION;
+        OPPOSITION
     }
 
     /**

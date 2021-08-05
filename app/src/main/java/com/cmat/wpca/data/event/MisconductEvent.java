@@ -6,8 +6,8 @@ import com.cmat.wpca.data.StringUtil;
 import com.cmat.wpca.data.entry.PlayerEntry;
 
 public class MisconductEvent extends BaseGameEvent {
-    MisconductType type = MisconductType.MISCONDUCT;
-    String note = "";
+    MisconductType type;
+    String note;
     Consumer<Long> UIUpdateCallBack;
     Consumer<Long> UIEndCallBack;
 
@@ -43,7 +43,7 @@ public class MisconductEvent extends BaseGameEvent {
 
     public enum MisconductType {
         BRUTALITY,
-        MISCONDUCT;
+        MISCONDUCT
     }
 
     public void end(Game game) {

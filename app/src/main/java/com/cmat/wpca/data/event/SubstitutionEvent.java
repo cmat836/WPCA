@@ -2,6 +2,8 @@ package com.cmat.wpca.data.event;
 
 import com.cmat.wpca.data.entry.PlayerEntry;
 
+import java.util.Objects;
+
 public class SubstitutionEvent extends BaseGameEvent {
     PlayerEntry playerOut;
     PlayerEntry playerIn;
@@ -18,8 +20,8 @@ public class SubstitutionEvent extends BaseGameEvent {
 
     @Override
     public boolean apply(Game game) {
-        game.players.get(playerOut).setSelected(false);
-        game.players.get(playerIn).setSelected(true);
+        Objects.requireNonNull(game.players.get(playerOut), "No Players").setSelected(false);
+        Objects.requireNonNull(game.players.get(playerIn), "No Players").setSelected(true);
         game.selectedPlayers.set(game.selectedPlayers.indexOf(game.players.get(playerOut)), game.players.get(playerIn));
         return true;
     }

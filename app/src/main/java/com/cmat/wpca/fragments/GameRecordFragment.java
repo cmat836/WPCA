@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
+import com.cmat.wpca.data.entry.GameEntry;
 import com.cmat.wpca.data.event.ExclusionEvent;
 import com.cmat.wpca.data.event.Game;
 import com.cmat.wpca.data.TaskTimer;
@@ -72,6 +75,8 @@ quarter button
 -//swimoff starts quarter//
 -after final quarter close button
 
+Timeout opp vs home
+
 -Goalie always bottom
 
 -BIG UNDO ON LONG PRESS
@@ -85,6 +90,7 @@ public class GameRecordFragment extends Fragment {
     DataStore<PlayerEntry> Players = new DataStore<>("players", PlayerEntry.class);
     DataStore<TeamEntry> Teams = new DataStore<>("teams", TeamEntry.class);
     DataStore<RulesetEntry> Rulesets = new DataStore<>("rulesets", RulesetEntry.class);
+    DataStore<GameEntry> SavedGames = new DataStore<>("savedgames", GameEntry.class);
 
     Game game;
 
@@ -118,31 +124,36 @@ public class GameRecordFragment extends Fragment {
         Players.load(getContext());
         Teams.load(getContext());
         Rulesets.load(getContext());
+        //SavedGames.load(getContext());
+
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
+        int backgroundcolor = typedValue.data;
 
         // Set base properties on the popupwindows
         eventMenu.setAnimationStyle(android.R.style.Animation);
-        eventMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        eventMenu.setBackgroundDrawable(new ColorDrawable(backgroundcolor));
         eventMenu.setElevation(20);
         shotMenu.setAnimationStyle(android.R.style.Animation);
-        shotMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        shotMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         shotMenu.setElevation(20);
         extraMenu.setAnimationStyle(android.R.style.Animation);
-        extraMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        extraMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         extraMenu.setElevation(20);
         substitutionMenu.setAnimationStyle(android.R.style.Animation);
-        substitutionMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        substitutionMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         substitutionMenu.setElevation(20);
         misconductMenu.setAnimationStyle(android.R.style.Animation);
-        misconductMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        misconductMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         misconductMenu.setElevation(20);
         swimoffMenu.setAnimationStyle(android.R.style.Animation);
-        swimoffMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        swimoffMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         swimoffMenu.setElevation(20);
         turnoverMenu.setAnimationStyle(android.R.style.Animation);
-        turnoverMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        turnoverMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         turnoverMenu.setElevation(20);
         playbackMenu.setAnimationStyle(android.R.style.Animation);
-        playbackMenu.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
+        playbackMenu.setBackgroundDrawable(new ColorDrawable((backgroundcolor)));
         playbackMenu.setElevation(20);
 
         // Get arguments from game setup
@@ -251,7 +262,7 @@ public class GameRecordFragment extends Fragment {
 
             Button qb = getButton(R.id.quarter_button);
             qb.setText("Between Q's");
-            qb.setBackgroundColor(Color.RED);
+            qb.setBackgroundColor(getColor(R.attr.colorAlert));
             refreshReplayTable();
         }
         return false;
@@ -275,10 +286,10 @@ public class GameRecordFragment extends Fragment {
     public void refreshTimeoutButton(long millis) {
         Button timeoutButton = getButton(R.id.timeout_button);
         if (game.isTimeout()) {
-            timeoutButton.setBackgroundColor(Color.RED);
+            timeoutButton.setBackgroundColor(getColor(R.attr.colorAlert));
             timeoutButton.setText(TaskTimer.millisToString(millis));
         } else {
-            timeoutButton.setBackgroundColor(Color.BLUE);
+            timeoutButton.setBackgroundColor(getColor(R.attr.colorPrimary));
             timeoutButton.setText("timeout");
         }
     }
@@ -286,10 +297,10 @@ public class GameRecordFragment extends Fragment {
     public void refreshUnevenButton(long millis) {
         Button unevenButton = getButton(R.id.uneven_button);
         if (game.isUneven()) {
-            unevenButton.setBackgroundColor(Color.RED);
+            unevenButton.setBackgroundColor(getColor(R.attr.colorAlert));
             unevenButton.setText(TaskTimer.millisToString(millis));
         } else {
-            unevenButton.setBackgroundColor(Color.BLUE);
+            unevenButton.setBackgroundColor(getColor(R.attr.colorPrimary));
             unevenButton.setText("Uneven");
         }
         refreshReplayTable();
@@ -299,10 +310,10 @@ public class GameRecordFragment extends Fragment {
         Button qb = getButton(R.id.quarter_button);
         if (game.isQuarterBreak()) {
             qb.setText("Between Q's");
-            qb.setBackgroundColor(Color.RED);
+            qb.setBackgroundColor(getColor(R.attr.colorAlert));
         } else {
             qb.setText(game.getQuarter().toString());
-            qb.setBackgroundColor(Color.BLUE);
+            qb.setBackgroundColor(getColor(R.attr.colorPrimary));
         }
     }
 
@@ -363,6 +374,12 @@ public class GameRecordFragment extends Fragment {
         return false;
     }
 
+    public int getColor(int resid) {
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(resid, typedValue, true);
+        return typedValue.data;
+    }
+
     private void refreshReplayTable() {
         ((TextView)getView().findViewById(R.id.replay_playernumber_textview)).setText(game.getEvent().getPlayer().getNumber());
         ((TextView)getView().findViewById(R.id.replay_event_textview)).setText(game.getEvent().getEventText());
@@ -386,6 +403,10 @@ public class GameRecordFragment extends Fragment {
 
     private void notablePlayButton_Pressed(View view) {
         game.getEvent().setNotable(true);
+        //SavedGames.setEntry(game.buildEntry("g1"));
+        //SavedGames.refresh(getContext());
+        //GameEntry g = SavedGames.getEntry(SavedGames.getArrayOfEntryNames()[0]);
+        //g.getName();
     }
 
     private void eventMenu_shotButton_Pressed(int buttonNumber, View v) {
@@ -564,14 +585,14 @@ public class GameRecordFragment extends Fragment {
         ExclusionEvent e =  new ExclusionEvent(game.getSelectedPlayers().get(buttonNumber), new Consumer<Long>() {
             @Override
             public void accept(Long aLong) {
-                playerButtons.get(buttonNumber).setBackgroundColor(Color.RED);
+                playerButtons.get(buttonNumber).setBackgroundColor(getColor(R.attr.colorAlert));
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getNumber() + " " + TaskTimer.millisToString(20000 - aLong));
             }
         }, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) {
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getName());
-                playerButtons.get(buttonNumber).setBackgroundColor(Color.GRAY);
+                playerButtons.get(buttonNumber).setBackgroundColor(getColor(R.attr.colorDisabled));
             }
         });
         game.addEvent(e);
@@ -612,14 +633,14 @@ public class GameRecordFragment extends Fragment {
             @Override
             public void accept(Long aLong) {
                 int time = (type == MisconductEvent.MisconductType.MISCONDUCT ? 20000 : 240000);
-                playerButtons.get(buttonNumber).setBackgroundColor(Color.RED);
+                playerButtons.get(buttonNumber).setBackgroundColor(getColor(R.attr.colorAlert));
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getNumber() + " " + TaskTimer.millisToString(time - aLong));
             }
         }, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) {
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getName());
-                playerButtons.get(buttonNumber).setBackgroundColor(Color.GRAY);
+                playerButtons.get(buttonNumber).setBackgroundColor(getColor(R.attr.colorDisabled));
             }
         });
         game.addEvent(e);
@@ -639,7 +660,7 @@ public class GameRecordFragment extends Fragment {
                 extraMenu_subButton_Pressed(buttonNumber, v, true);
                 e.end(game);
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getName());
-                playerButtons.get(buttonNumber).setBackgroundColor(Color.GRAY);
+                playerButtons.get(buttonNumber).setBackgroundColor(getColor(R.attr.colorDisabled));
                 return false;
             }
         });
@@ -728,7 +749,7 @@ public class GameRecordFragment extends Fragment {
 
                     if (mandatory) {
                         playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getName());
-                        playerButtons.get(buttonNumber).setBackground(getButton(R.id.oppgoal_button).getBackground());
+                        playerButtons.get(buttonNumber).setBackground(new ColorDrawable(getColor(R.attr.colorPrimary)));
 
                         // Restore the event menu
                         playerButtons.get(buttonNumber).setOnTouchListener(new View.OnTouchListener() {

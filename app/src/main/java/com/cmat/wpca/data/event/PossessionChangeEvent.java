@@ -51,6 +51,6 @@ public class PossessionChangeEvent extends BaseGameEvent {
 
     public enum PossessionChangeType {
         STEAL,
-        TURNOVER;
+        TURNOVER
     }
 }
