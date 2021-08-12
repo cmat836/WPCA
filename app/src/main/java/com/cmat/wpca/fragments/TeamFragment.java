@@ -4,8 +4,10 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,6 +31,7 @@ import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.entry.PlayerEntry;
 import com.cmat.wpca.data.entry.TeamEntry;
+import com.cmat.wpca.ui.SimplifiedPopupWindow;
 
 import java.util.ArrayList;
 
@@ -36,14 +39,14 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
     DataStore<PlayerEntry> playerData = new DataStore<>("players", PlayerEntry.class);
     DataStore<TeamEntry> teamData = new DataStore<>("teams", TeamEntry.class);
 
-    final PopupWindow newTeamWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow newPlayerWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow removeTeamWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow removePlayerWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow transferPlayerWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow filterTeamWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow modifyTeamWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
-    final PopupWindow modifyPlayerWindow = new PopupWindow(null,LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, true);
+    SimplifiedPopupWindow newTeamWindow;
+    SimplifiedPopupWindow newPlayerWindow;
+    SimplifiedPopupWindow removeTeamWindow;
+    SimplifiedPopupWindow removePlayerWindow;
+    SimplifiedPopupWindow transferPlayerWindow;
+    SimplifiedPopupWindow filterTeamWindow;
+    SimplifiedPopupWindow modifyTeamWindow;
+    SimplifiedPopupWindow modifyPlayerWindow;
 
     @Override
     public View onCreateView(
@@ -80,23 +83,23 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
         view.findViewById(R.id.fab_addteam).setOnClickListener(this::onAddTeamButtonClick);
         view.findViewById(R.id.fab_removeteam).setOnClickListener(this::onRemoveTeamButtonClick);
 
-        newPlayerWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        newPlayerWindow.setElevation(20);
-        newTeamWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        newTeamWindow.setElevation(20);
-        removePlayerWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        removePlayerWindow.setElevation(20);
-        removeTeamWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        removeTeamWindow.setElevation(20);
-        transferPlayerWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        transferPlayerWindow.setElevation(20);
-        modifyTeamWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        modifyTeamWindow.setElevation(20);
-        modifyPlayerWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        modifyPlayerWindow.setElevation(20);
-        filterTeamWindow.setBackgroundDrawable(new ColorDrawable((Color.WHITE)));
-        filterTeamWindow.setElevation(20);
+        int backgroundcolor = getColor(R.attr.colorOnPrimary);
 
+        newPlayerWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, false, backgroundcolor);
+        newTeamWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, false, backgroundcolor);
+        removePlayerWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, true, backgroundcolor);
+        removeTeamWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, true, backgroundcolor);
+        transferPlayerWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, false, backgroundcolor);
+        modifyTeamWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, false, backgroundcolor);
+        modifyPlayerWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, false, backgroundcolor);
+        filterTeamWindow = new SimplifiedPopupWindow(null, LinearLayout.LayoutParams.WRAP_CONTENT, true, true, backgroundcolor);
+
+    }
+
+    public int getColor(int resid) {
+        TypedValue typedValue = new TypedValue();
+        getContext().getTheme().resolveAttribute(resid, typedValue, true);
+        return typedValue.data;
     }
 
     private ArrayList<PlayerEntry> getTeamlessPlayers() {
@@ -203,8 +206,11 @@ public class TeamFragment extends Fragment implements AdapterView.OnItemSelected
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View addPlayerView = inflater.inflate(R.layout.popupwindow_player_create, null);
 
+
         newPlayerWindow.setContentView(addPlayerView);
         newPlayerWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        //newPlayerWindow.setFocusable(true);
 
         addPlayerView.findViewById(R.id.createplayer_button).setOnClickListener(this::onPlayerCreated);
         Spinner team = (Spinner)addPlayerView.findViewById(R.id.spinner_team_assign);

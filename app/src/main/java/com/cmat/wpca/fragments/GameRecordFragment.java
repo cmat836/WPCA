@@ -126,9 +126,7 @@ public class GameRecordFragment extends Fragment {
         Rulesets.load(getContext());
         //SavedGames.load(getContext());
 
-        TypedValue typedValue = new TypedValue();
-        getContext().getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-        int backgroundcolor = typedValue.data;
+        int backgroundcolor = getColor(R.attr.colorOnPrimary);
 
         // Set base properties on the popupwindows
         eventMenu.setAnimationStyle(android.R.style.Animation);
