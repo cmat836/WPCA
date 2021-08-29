@@ -5,25 +5,32 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/rulesetremove_title_textview"
+        android:id="@+id/removeplayer_title_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_rulesetremove_title"
+        android:text="@string/label_playerremove_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/removeplayer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="TextView" />
+
     <Button
-        android:id="@+id/removeruleset_button"
+        android:id="@+id/removeplayer_button"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/button_rulesetremove_remove" />
+        android:text="@string/ruleset_remove_button_remove" />
 </LinearLayout>

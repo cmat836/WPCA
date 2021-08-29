@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.TeamFragment">
+    tools:context=".fragments.TeamFragment_Old">
 
     <TextView
-        android:id="@+id/teampagetitle_textview"
+        android:id="@+id/teampagetitle_textview_old"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="@string/label_teampage_title"
+        android:text="@string/teams_text_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="44sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,40 +20,41 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/backtostart_button"
+        android:id="@+id/setup_button_return_to_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/button_navigation_startpage"
+        android:text="@string/start_button_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_team_filter"
+        android:id="@+id/button_team_filter_old"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         android:text="@string/button_team_filter"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/teampagetitle_textview" />
+        app:layout_constraintTop_toBottomOf="@id/teampagetitle_textview_old" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamdisplay_recyclerview"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:minHeight="80dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toTopOf="@+id/playerdisplay_recyclerview"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/linearLayout"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_team_filter" />
+        app:layout_constraintTop_toBottomOf="@id/button_team_filter_old" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/playerdisplay_recyclerview"
@@ -63,7 +64,7 @@
         android:layout_marginBottom="10dp"
         android:minHeight="80dp"
         android:scrollbars="vertical"
-        app:layout_constraintBottom_toTopOf="@id/backtostart_button"
+        app:layout_constraintBottom_toTopOf="@id/setup_button_return_to_start"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teamdisplay_recyclerview" />
@@ -82,19 +83,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_addplayer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
-        android:clickable="true"
-        android:contentDescription="Add new Entry"
-        android:src="@android:drawable/ic_input_add"
-        app:fabCustomSize="40dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_removeteam"
@@ -108,17 +97,41 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_removeplayer"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="12dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_menu_delete"
-        app:fabCustomSize="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="2dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/teamdisplay_recyclerview"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/teamdisplay_recyclerview"
+        app:layout_constraintTop_toTopOf="@+id/teamdisplay_recyclerview">
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_addplayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:contentDescription="Add new Entry"
+            android:src="@android:drawable/ic_input_add"
+            app:fabCustomSize="40dp"
+            app:fabSize="normal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_removeplayer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:clickable="true"
+            android:src="@android:drawable/ic_menu_delete"
+            app:fabCustomSize="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,6 @@
 package com.cmat.wpca.fragments;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -25,6 +24,7 @@ import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.entry.PlayerEntry;
 import com.cmat.wpca.data.entry.RulesetEntry;
 import com.cmat.wpca.data.entry.TeamEntry;
+import com.cmat.wpca.ui.SelectableViewHolder;
 
 import java.util.ArrayList;
 
@@ -41,7 +41,7 @@ public class GameSetupFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.game_setup, container, false);
+        return inflater.inflate(R.layout.fragment_game_setup, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -51,40 +51,40 @@ public class GameSetupFragment extends Fragment {
         teamData.load(getContext());
         playerData.load(getContext());
 
-        Spinner sr = this.getView().findViewById(R.id.gamesetup_rules_spinner);
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, rulesetData.getArrayOfEntryNames());
+        Spinner sr = this.getView().findViewById(R.id.setup_spinner_rule_select);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.item_spinner, rulesetData.getArrayOfEntryNames());
         sr.setAdapter(adapter);
 
 
-        Spinner st = this.getView().findViewById(R.id.gamesetup_team_spinner);
-        ArrayAdapter adaptert = new ArrayAdapter(getContext(), R.layout.spinner_item, teamData.getArrayOfEntryNames());
+        Spinner st = this.getView().findViewById(R.id.setup_spinner_team_select);
+        ArrayAdapter adaptert = new ArrayAdapter(getContext(), R.layout.item_spinner, teamData.getArrayOfEntryNames());
         st.setAdapter(adaptert);
         st.setOnItemSelectedListener(new TeamSpinnerSelected());
 
-        RecyclerView playerSelect = (RecyclerView)view.findViewById(R.id.playerselection_recyclerview);
+        RecyclerView playerSelect = (RecyclerView)view.findViewById(R.id.setup_recycler_player_select);
         playerSelect.setLayoutManager(new LinearLayoutManager(getContext()));
         PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(this);
         playerSelect.setAdapter(playerAdapter);
 
-        view.findViewById(R.id.gamesetup_go_button).setOnClickListener(this::gameStartButtonClick);
-        view.findViewById(R.id.backtostart_button).setOnClickListener(this::onBackToStartButtonClick);
+        view.findViewById(R.id.setup_button_start_game).setOnClickListener(this::gameStartButtonClick);
+        view.findViewById(R.id.setup_button_return_to_start).setOnClickListener(this::onBackToStartButtonClick);
 
         playersRemaining = 7;
     }
 
     private void refreshTeamDisplay() {
-        RecyclerView teamDisplay = (RecyclerView)this.getView().findViewById(R.id.playerselection_recyclerview);
+        RecyclerView teamDisplay = (RecyclerView)this.getView().findViewById(R.id.setup_recycler_player_select);
         PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(this);
         teamDisplay.setAdapter(playerAdapter);
     }
 
     private void gameStartButtonClick(View view) {
-        Spinner st = this.getView().findViewById(R.id.gamesetup_team_spinner);
-        Spinner sr = this.getView().findViewById(R.id.gamesetup_rules_spinner);
+        Spinner st = this.getView().findViewById(R.id.setup_spinner_team_select);
+        Spinner sr = this.getView().findViewById(R.id.setup_spinner_rule_select);
         String teamName = st.getItemAtPosition(st.getSelectedItemPosition()).toString();
         String rulesetName = sr.getItemAtPosition(sr.getSelectedItemPosition()).toString();
         String[] selectedPlayers = new String[7];
-        ArrayList<String> players = ((PlayerSelectAdapter)((RecyclerView)getView().findViewById(R.id.playerselection_recyclerview)).getAdapter()).selectedPlayers;
+        ArrayList<String> players = ((PlayerSelectAdapter)((RecyclerView)getView().findViewById(R.id.setup_recycler_player_select)).getAdapter()).selectedPlayers;
         for (int i = 0; i < players.size(); i++) {
             selectedPlayers[i] = players.get(i);
         }
@@ -99,7 +99,7 @@ public class GameSetupFragment extends Fragment {
         NavHostFragment.findNavController(GameSetupFragment.this).popBackStack(R.id.StartPage, false);
     }
 
-    public class PlayerSelectAdapter extends RecyclerView.Adapter<GameSetupFragment.SelectableViewHolder>
+    public class PlayerSelectAdapter extends RecyclerView.Adapter<SelectableViewHolder>
     {
         GameSetupFragment context;
         ArrayList<String> selectedPlayers = new ArrayList<>();
@@ -111,7 +111,7 @@ public class GameSetupFragment extends Fragment {
 
         @Override
         public SelectableViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.selectable_item, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_selectable, parent, false);
             return new SelectableViewHolder(v, context.getContext());
         }
 
@@ -140,7 +140,7 @@ public class GameSetupFragment extends Fragment {
                         selectedPlayers.remove(name);
                     }
                     playersRemaining = 7 - selectedPlayers.size();
-                    ((TextView)context.getView().findViewById(R.id.playersremaining_textview)).setText((String.valueOf(playersRemaining)));
+                    ((TextView)context.getView().findViewById(R.id.setup_text_players_remaining_number)).setText((String.valueOf(playersRemaining)));
                 }
             });
         }
@@ -168,52 +168,5 @@ public class GameSetupFragment extends Fragment {
         public void onNothingSelected(AdapterView<?> parent) {
 
         }
-    }
-
-    public static class SelectableViewHolder extends RecyclerView.ViewHolder {
-        private final TextView nameText;
-        private final TextView infoText;
-        private final FrameLayout layout;
-
-        private Context context;
-
-        private boolean selected;
-
-        public SelectableViewHolder(@NonNull View itemView, Context c) {
-            super(itemView);
-            nameText = (TextView) itemView.findViewById(R.id.textViewName);
-            infoText = (TextView) itemView.findViewById(R.id.textViewInfo);
-            layout = (FrameLayout) itemView.findViewById(R.id.selectable_layout);
-            selected = false;
-            context = c;
-        }
-
-        public void setSelected(boolean selected) {
-            TypedValue typedValue = new TypedValue();
-            context.getTheme().resolveAttribute(R.attr.colorOnPrimary, typedValue, true);
-            int backgroundcolor = typedValue.data;
-            context.getTheme().resolveAttribute(R.attr.colorSecondary, typedValue, true);
-            int selectedcolor = typedValue.data;
-
-
-            getLayout().setSelected(selected);
-            this.selected = selected;
-            getLayout().setBackground(selected ? new ColorDrawable((selectedcolor)) : new ColorDrawable((backgroundcolor)));
-
-        }
-
-        public boolean isSelected() {
-            return selected;
-        }
-
-        public TextView getNameText() {
-            return nameText;
-        }
-
-        public TextView getInfoText() {
-            return infoText;
-        }
-
-        public FrameLayout getLayout() { return layout; }
     }
 }

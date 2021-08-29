@@ -4,10 +4,11 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:foreground="?selectableItemBackground"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:focusable="true">
 
     <TextView
-        android:id="@+id/textViewName"
+        android:id="@+id/checkbox_item_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -18,8 +19,8 @@
         android:text=""
         android:textSize="24sp" />
 
-    <TextView
-        android:id="@+id/textViewInfo"
+    <CheckBox
+        android:id="@+id/checkbox_item_checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"

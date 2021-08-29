@@ -6,35 +6,35 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/replay_textview"
+        android:id="@+id/playback_display_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:text="Replay"
+        android:text="@string/playback_display_text_title"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/playback_recyclerview"
+        app:layout_constraintBottom_toTopOf="@+id/playback_display_recycler_events"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/playback_recyclerview"
+        android:id="@+id/playback_display_recycler_events"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/playback_return_button"
+        app:layout_constraintBottom_toTopOf="@+id/playback_display_button_return"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/replay_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/playback_display_text_title" />
 
     <Button
-        android:id="@+id/playback_return_button"
+        android:id="@+id/playback_display_button_return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Return"
+        android:text="@string/playback_display_button_return"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/playback_recyclerview" />
+        app:layout_constraintTop_toBottomOf="@id/playback_display_recycler_events" />
 </androidx.constraintlayout.widget.ConstraintLayout>

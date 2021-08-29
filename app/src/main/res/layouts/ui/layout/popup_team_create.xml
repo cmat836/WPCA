@@ -25,7 +25,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:autofillHints="@string/hint_rulesetcreate_name"
+        android:autofillHints="@string/hint_teamcreate_name"
         android:ems="10"
         android:hint="@string/hint_teamcreate_name"
         android:inputType="textPersonName"
@@ -36,7 +36,7 @@
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_rulesetcreate_create"
+        android:text="@string/ruleset_create_button_create"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginTop="10dp"/>

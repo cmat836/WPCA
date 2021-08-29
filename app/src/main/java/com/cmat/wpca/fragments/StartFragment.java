@@ -11,7 +11,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmat.wpca.R;
 
-public class StartPageFragment extends Fragment {
+public class StartFragment extends Fragment {
 
     @Override
     public View onCreateView(
@@ -19,37 +19,37 @@ public class StartPageFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.start_page, container, false);
+        return inflater.inflate(R.layout.fragment_start, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        view.findViewById(R.id.button_game_setup).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.start_button_setup).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(StartPageFragment.this).navigate(R.id.action_StartPage_to_GameSetup);
+                NavHostFragment.findNavController(StartFragment.this).navigate(R.id.action_StartPage_to_GameSetup);
             }
         });
 
-        view.findViewById(R.id.button_evaluation).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.start_button_evaluation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(StartPageFragment.this).navigate(R.id.action_StartPage_to_Evaluation);
+                NavHostFragment.findNavController(StartFragment.this).navigate(R.id.action_StartPage_to_Evaluation);
             }
         });
 
-        view.findViewById(R.id.button_teams).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.start_button_teams).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(StartPageFragment.this).navigate(R.id.action_StartPage_to_TeamPage);
+                NavHostFragment.findNavController(StartFragment.this).navigate(R.id.action_StartPage_to_TeamPage);
             }
         });
 
-        view.findViewById(R.id.button_ruleset).setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.start_button_ruleset).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(StartPageFragment.this).navigate(R.id.action_StartPage_to_RuleSets);
+                NavHostFragment.findNavController(StartFragment.this).navigate(R.id.action_StartPage_to_RuleSets);
             }
         });
     }

@@ -6,50 +6,41 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/sub_button"
+        android:id="@+id/shot_menu_button_goal"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="#E211A614"
         android:insetLeft="6dp"
         android:insetRight="6dp"
-        android:text="Sub"
-        app:layout_constraintBottom_toTopOf="@+id/swimoff_button"
-        app:layout_constraintEnd_toStartOf="@+id/card_button"
+        android:text="@string/shot_menu_button_goal"
+        app:layout_constraintBottom_toTopOf="@+id/shot_menu_button_block"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/card_button"
+        android:id="@+id/shot_menu_button_block"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="#CF4610"
         android:insetLeft="6dp"
         android:insetRight="6dp"
-        android:text="Card"
-        app:layout_constraintBottom_toTopOf="@+id/penalty_button"
+        android:text="@string/shot_menu_button_block"
+        app:layout_constraintBottom_toTopOf="@+id/shot_menu_button_miss"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sub_button"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/swimoff_button"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:insetLeft="6dp"
-        android:insetRight="6dp"
-        android:text="Swim off"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/penalty_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sub_button" />
+        app:layout_constraintTop_toBottomOf="@+id/shot_menu_button_goal" />
 
     <Button
-        android:id="@+id/penalty_button"
+        android:id="@+id/shot_menu_button_miss"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="#E10B0B"
         android:insetLeft="6dp"
         android:insetRight="6dp"
-        android:text="Penalty"
+        android:text="@string/shot_menu_button_miss"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/swimoff_button"
-        app:layout_constraintTop_toBottomOf="@+id/card_button" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/shot_menu_button_block" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,32 +5,45 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/removeplayer_title_textview"
+        android:id="@+id/playertransfer_title_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_playerremove_title"
+        android:text="@string/label_playertransfer_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/removeplayer_name"
-        android:layout_width="match_parent"
+        android:id="@+id/playertransfer_name_textview"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="@string/rule_modify_text_name"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/playertransfer_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <Button
-        android:id="@+id/removeplayer_button"
+        android:id="@+id/transferplayer_button"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/button_rulesetremove_remove" />
+        android:text="@string/label_playertransfer_transfer" />
+
 </LinearLayout>

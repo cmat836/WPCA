@@ -1,10 +1,8 @@
 package com.cmat.wpca.fragments;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -45,6 +43,7 @@ import com.cmat.wpca.data.event.SubstitutionEvent;
 import com.cmat.wpca.data.event.SwimoffEvent;
 import com.cmat.wpca.data.entry.TeamEntry;
 import com.cmat.wpca.data.event.TimeoutEvent;
+import com.cmat.wpca.ui.DisplayViewHolder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -114,7 +113,7 @@ public class GameRecordFragment extends Fragment {
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.game_record, container, false);
+        return inflater.inflate(R.layout.fragment_game_record, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -178,25 +177,25 @@ public class GameRecordFragment extends Fragment {
         refreshScoreboard();
 
         // Setup event listeners for UI elements
-        ((ToggleButton)getView().findViewById(R.id.possesion_toggle)).setOnCheckedChangeListener(this::possessionButton_Toggled);
+        ((ToggleButton)requireView().findViewById(R.id.record_toggle_possession)).setOnCheckedChangeListener(this::possessionButton_Toggled);
 
-        getButton(R.id.oppgoal_button).setOnClickListener(this::oppGoalButton_Pressed);
-        getButton(R.id.notableplay_button).setOnClickListener(this::notablePlayButton_Pressed);
-        getButton(R.id.playback_button).setOnClickListener(this::playbackButton_Pressed);
-        getButton(R.id.uneven_button).setOnClickListener(this::unevenButton_Pressed);
-        getButton(R.id.quarter_button).setOnLongClickListener(this::quarterButton_Pressed);
-        getButton(R.id.timeout_button).setOnClickListener(this::timeoutButton_Pressed);
+        getButton(R.id.record_button_oppgoal).setOnClickListener(this::oppGoalButton_Pressed);
+        getButton(R.id.record_button_notable_play).setOnClickListener(this::notablePlayButton_Pressed);
+        getButton(R.id.record_button_playback_open).setOnClickListener(this::playbackButton_Pressed);
+        getButton(R.id.record_button_uneven).setOnClickListener(this::unevenButton_Pressed);
+        getButton(R.id.record_button_quarter).setOnLongClickListener(this::quarterButton_Pressed);
+        getButton(R.id.record_button_timeout).setOnClickListener(this::timeoutButton_Pressed);
 
-        getView().findViewById(R.id.replay_container).setOnLongClickListener(this::replayContainer_LongPressed);
+        getView().findViewById(R.id.record_linearlayout_replay_container).setOnLongClickListener(this::replayContainer_LongPressed);
 
         // Put all the player buttons in an array for easy access
-        playerButtons.add(getButton(R.id.player1_button));
-        playerButtons.add(getButton(R.id.player2_button));
-        playerButtons.add(getButton(R.id.player3_button));
-        playerButtons.add(getButton(R.id.player4_button));
-        playerButtons.add(getButton(R.id.player5_button));
-        playerButtons.add(getButton(R.id.player6_button));
-        playerButtons.add(getButton(R.id.player7_button));
+        playerButtons.add(getButton(R.id.record_button_player_1));
+        playerButtons.add(getButton(R.id.record_button_player_2));
+        playerButtons.add(getButton(R.id.record_button_player_3));
+        playerButtons.add(getButton(R.id.record_button_player_4));
+        playerButtons.add(getButton(R.id.record_button_player_5));
+        playerButtons.add(getButton(R.id.record_button_player_6));
+        playerButtons.add(getButton(R.id.record_button_player_7));
 
         // Dynamically add their listeners and set content
         for (int i = 0; i < playerButtons.size(); i++) {
@@ -214,17 +213,17 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void playbackButton_Pressed(View v) {
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_playback, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_playback_display, null);
         playbackMenu.setContentView(content);
         playbackMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
         //v.performClick();
 
-        RecyclerView r = ((RecyclerView)content.findViewById(R.id.playback_recyclerview));
+        RecyclerView r = ((RecyclerView)content.findViewById(R.id.playback_display_recycler_events));
         r.setLayoutManager(new LinearLayoutManager(getContext()));
         PlaybackAdapter adapter = new PlaybackAdapter(this);
         r.setAdapter(adapter);
 
-        content.findViewById(R.id.playback_return_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.playback_display_button_return).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 playbackMenu.dismiss();
@@ -258,8 +257,8 @@ public class GameRecordFragment extends Fragment {
         if (!game.isQuarterBreak()) {
             game.addEvent(new QuarterBreakEvent(game.getQuarter()));
 
-            Button qb = getButton(R.id.quarter_button);
-            qb.setText("Between Q's");
+            Button qb = getButton(R.id.record_button_quarter);
+            qb.setText(R.string.record_button_quarter_between);
             qb.setBackgroundColor(getColor(R.attr.colorAlert));
             refreshReplayTable();
         }
@@ -274,40 +273,40 @@ public class GameRecordFragment extends Fragment {
     }
 
     public void refreshScoreboard() {
-        ((TextView)getView().findViewById(R.id.score_textview)).setText(game.getHomeGoals() + ":" + game.getOppGoals());
+        ((TextView)getView().findViewById(R.id.record_text_score)).setText(game.getHomeGoals() + ":" + game.getOppGoals());
     }
 
     public void refreshTurnoverButton() {
-        ((ToggleButton)getView().findViewById(R.id.possesion_toggle)).setChecked(game.getPossession() == Game.Team.OPPOSITION);
+        ((ToggleButton)getView().findViewById(R.id.record_toggle_possession)).setChecked(game.getPossession() == Game.Team.OPPOSITION);
     }
 
     public void refreshTimeoutButton(long millis) {
-        Button timeoutButton = getButton(R.id.timeout_button);
+        Button timeoutButton = getButton(R.id.record_button_timeout);
         if (game.isTimeout()) {
             timeoutButton.setBackgroundColor(getColor(R.attr.colorAlert));
             timeoutButton.setText(TaskTimer.millisToString(millis));
         } else {
             timeoutButton.setBackgroundColor(getColor(R.attr.colorPrimary));
-            timeoutButton.setText("timeout");
+            timeoutButton.setText(R.string.record_button_timeout);
         }
     }
 
     public void refreshUnevenButton(long millis) {
-        Button unevenButton = getButton(R.id.uneven_button);
+        Button unevenButton = getButton(R.id.record_button_uneven);
         if (game.isUneven()) {
             unevenButton.setBackgroundColor(getColor(R.attr.colorAlert));
             unevenButton.setText(TaskTimer.millisToString(millis));
         } else {
             unevenButton.setBackgroundColor(getColor(R.attr.colorPrimary));
-            unevenButton.setText("Uneven");
+            unevenButton.setText(R.string.record_button_uneven);
         }
         refreshReplayTable();
     }
 
     public void refreshQuarterButton() {
-        Button qb = getButton(R.id.quarter_button);
+        Button qb = getButton(R.id.record_button_quarter);
         if (game.isQuarterBreak()) {
-            qb.setText("Between Q's");
+            qb.setText(R.string.record_button_quarter_between);
             qb.setBackgroundColor(getColor(R.attr.colorAlert));
         } else {
             qb.setText(game.getQuarter().toString());
@@ -317,38 +316,38 @@ public class GameRecordFragment extends Fragment {
 
     private boolean playerButton_Pressed(int buttonNumber, View v, MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            View content = this.getLayoutInflater().inflate(R.layout.popupwindow_event_menu, null);
+            View content = this.getLayoutInflater().inflate(R.layout.popup_event_select, null);
             eventMenu.setContentView(content);
             eventMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
             v.performClick();
             return true;
         }
         if (event.getAction() == MotionEvent.ACTION_UP) {
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.shot_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_shot), event)) {
                 eventMenu_shotButton_Pressed(buttonNumber, v);
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.blank_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_go_back), event)) {
                 eventMenu.dismiss();
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.turnover_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_turnover), event)) {
                 eventMenu_turnoverButton_Pressed(buttonNumber, v);
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.exclusion_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_exclusion), event)) {
                 eventMenu_exclusionButton_Pressed(buttonNumber, v);
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.block_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_block), event)) {
                 eventMenu_blockButton_Pressed(buttonNumber, v);
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.badpass_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_badpass), event)) {
                 eventMenu_badpassButton_Pressed(buttonNumber, v);
                 return true;
             }
-            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.extra_button), event)) {
+            if (checkEventWithinView(eventMenu.getContentView().findViewById(R.id.event_select_button_extra), event)) {
                 eventMenu_extraButton_Pressed(buttonNumber, v);
                 return true;
             }
@@ -379,9 +378,9 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void refreshReplayTable() {
-        ((TextView)getView().findViewById(R.id.replay_playernumber_textview)).setText(game.getEvent().getPlayer().getNumber());
-        ((TextView)getView().findViewById(R.id.replay_event_textview)).setText(game.getEvent().getEventText());
-        ((TextView)getView().findViewById(R.id.replay_timestamp_textview)).setText(TaskTimer.millisToString(game.getEvent().getTime()));
+        ((TextView)getView().findViewById(R.id.record_text_replay_playernumber)).setText(game.getEvent().getPlayer().getNumber());
+        ((TextView)getView().findViewById(R.id.record_text_replay_event)).setText(game.getEvent().getEventText());
+        ((TextView)getView().findViewById(R.id.record_text_replay_timestamp)).setText(TaskTimer.millisToString(game.getEvent().getTime()));
     }
 
     private void oppGoalButton_Pressed(View view) {
@@ -409,11 +408,11 @@ public class GameRecordFragment extends Fragment {
 
     private void eventMenu_shotButton_Pressed(int buttonNumber, View v) {
         eventMenu.dismiss();
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_shot_menu, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_shot_menu, null);
         shotMenu.setContentView(content);
         shotMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        content.findViewById(R.id.goal_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.shot_menu_button_goal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new GoalEvent(game.getSelectedPlayers().get(buttonNumber)));
@@ -422,7 +421,7 @@ public class GameRecordFragment extends Fragment {
                 shotMenu.dismiss();
             }
         });
-        content.findViewById(R.id.blocked_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.shot_menu_button_block).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new StatisticEvent(game.getSelectedPlayers().get(buttonNumber), StatisticEvent.StatisticEventType.BLOCKED));
@@ -430,7 +429,7 @@ public class GameRecordFragment extends Fragment {
                 shotMenu.dismiss();
             }
         });
-        content.findViewById(R.id.miss_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.shot_menu_button_miss).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new StatisticEvent(game.getSelectedPlayers().get(buttonNumber), StatisticEvent.StatisticEventType.MISS));
@@ -442,11 +441,11 @@ public class GameRecordFragment extends Fragment {
 
     private void eventMenu_turnoverButton_Pressed(int buttonNumber, View v) {
         eventMenu.dismiss();
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_turnover_menu, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_turnover_menu, null);
         turnoverMenu.setContentView(content);
         turnoverMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        content.findViewById(R.id.steal_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.turnover_menu_button_steal).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new PossessionChangeEvent(game.getSelectedPlayers().get(buttonNumber), PossessionChangeEvent.PossessionChangeType.STEAL));
@@ -455,7 +454,7 @@ public class GameRecordFragment extends Fragment {
                 refreshReplayTable();
             }
         });
-        content.findViewById(R.id.turnovermenu_turnover_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.turnover_menu_button_turnover).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new PossessionChangeEvent(game.getSelectedPlayers().get(buttonNumber), PossessionChangeEvent.PossessionChangeType.TURNOVER));
@@ -480,32 +479,32 @@ public class GameRecordFragment extends Fragment {
 
     private void eventMenu_extraButton_Pressed(int buttonNumber, View v) {
         eventMenu.dismiss();
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_extra_menu, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_extra_select, null);
         extraMenu.setContentView(content);
         extraMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        content.findViewById(R.id.sub_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.extra_select_button_sub).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 extraMenu.dismiss();
                 extraMenu_subButton_Pressed(buttonNumber, v, false);
             }
         });
-        content.findViewById(R.id.card_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.extra_select_button_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 extraMenu.dismiss();
                 extraMenu_cardButton_Pressed(buttonNumber, v);
             }
         });
-        content.findViewById(R.id.swimoff_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.extra_select_button_swimoff).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 extraMenu.dismiss();
                 extraMenu_swimoffButton_Pressed(buttonNumber, v);
             }
         });
-        content.findViewById(R.id.penalty_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.extra_select_button_penalty).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 extraMenu.dismiss();
@@ -515,14 +514,14 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void extraMenu_subButton_Pressed(int buttonNumber, View v, boolean mandatory) {
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_substitution, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_substitution_menu, null);
         substitutionMenu.setContentView(content);
         substitutionMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
-        RecyclerView r = ((RecyclerView)content.findViewById(R.id.subsitution_player_recycleview));
+        RecyclerView r = ((RecyclerView)content.findViewById(R.id.subsitution_menu_recycler_players));
         r.setLayoutManager(new LinearLayoutManager(getContext()));
         PlayerSubAdapter adapter = new PlayerSubAdapter(this, game.getSelectedPlayers().get(buttonNumber).getName(), buttonNumber, mandatory);
         r.setAdapter(adapter);
-        content.findViewById(R.id.substitution_goback_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.substitution_menu_button_return).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 substitutionMenu.dismiss();
@@ -532,17 +531,17 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void extraMenu_cardButton_Pressed(int buttonNumber, View v) {
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_misconduct_menu, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_misconduct_menu, null);
         misconductMenu.setContentView(content);
         misconductMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
-        content.findViewById(R.id.brutality_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.misconduct_menu_button_brutality).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 misconductMenu_Button_Pressed(buttonNumber, v, MisconductEvent.MisconductType.BRUTALITY);
                 misconductMenu.dismiss();
             }
         });
-        content.findViewById(R.id.misconduct_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.misconduct_menu_button_misconduct).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 misconductMenu_Button_Pressed(buttonNumber, v, MisconductEvent.MisconductType.MISCONDUCT);
@@ -552,10 +551,10 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void extraMenu_swimoffButton_Pressed(int buttonNumber, View v) {
-        View content = this.getLayoutInflater().inflate(R.layout.popupwindow_swimoff_menu, null);
+        View content = this.getLayoutInflater().inflate(R.layout.popup_swimoff_menu, null);
         swimoffMenu.setContentView(content);
         swimoffMenu.showAtLocation(v, Gravity.CENTER, 0, 0);
-        content.findViewById(R.id.swimoff_win_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.swimoff_menu_button_win).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new SwimoffEvent(game.getSelectedPlayers().get(buttonNumber), SwimoffEvent.SwimoffResult.WIN));
@@ -564,7 +563,7 @@ public class GameRecordFragment extends Fragment {
                 refreshQuarterButton();
             }
         });
-        content.findViewById(R.id.swimoff_lose_button).setOnClickListener(new View.OnClickListener() {
+        content.findViewById(R.id.swimoff_menu_button_lose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 game.addEvent(new SwimoffEvent(game.getSelectedPlayers().get(buttonNumber), SwimoffEvent.SwimoffResult.LOSS));
@@ -610,7 +609,7 @@ public class GameRecordFragment extends Fragment {
             public boolean onLongClick(View v) {
                 e.end(game);
                 playerButtons.get(buttonNumber).setText(game.getSelectedPlayers().get(buttonNumber).getName());
-                playerButtons.get(buttonNumber).setBackground(getButton(R.id.oppgoal_button).getBackground());
+                playerButtons.get(buttonNumber).setBackground(getButton(R.id.record_button_oppgoal).getBackground());
 
                 // Restore the event menu
                 playerButtons.get(buttonNumber).setOnTouchListener(new View.OnTouchListener() {
@@ -626,7 +625,7 @@ public class GameRecordFragment extends Fragment {
     }
 
     private void misconductMenu_Button_Pressed(int buttonNumber, View v, MisconductEvent.MisconductType type) {
-        String note = ((EditText)misconductMenu.getContentView().findViewById(R.id.cardnote_edittext)).getText().toString();
+        String note = ((EditText)misconductMenu.getContentView().findViewById(R.id.misconduct_menu_edit_note)).getText().toString();
         MisconductEvent e = new MisconductEvent(game.getSelectedPlayers().get(buttonNumber), type, note, new Consumer<Long>() {
             @Override
             public void accept(Long aLong) {
@@ -678,7 +677,7 @@ public class GameRecordFragment extends Fragment {
         return (EditText)(getView().findViewById(id));
     }
 
-    public class PlaybackAdapter extends RecyclerView.Adapter<InfoViewHolder> {
+    public class PlaybackAdapter extends RecyclerView.Adapter<DisplayViewHolder> {
         GameRecordFragment context;
 
         public PlaybackAdapter(GameRecordFragment gameRecordFragment) {
@@ -687,13 +686,13 @@ public class GameRecordFragment extends Fragment {
 
         @NonNull
         @Override
-        public InfoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.selectable_item, parent, false);
-            return new InfoViewHolder(v);
+        public DisplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_display, parent, false);
+            return new DisplayViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull InfoViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull DisplayViewHolder holder, int position) {
             IGameEvent event = context.game.getEvent(position);
             holder.getNameText().setText(event.getPlayer().getNumber() + " " + event.getEventText());
             holder.getInfoText().setText(TaskTimer.millisToString(event.getTime()));
@@ -705,7 +704,7 @@ public class GameRecordFragment extends Fragment {
         }
     }
 
-    public class PlayerSubAdapter extends RecyclerView.Adapter<InfoViewHolder>
+    public class PlayerSubAdapter extends RecyclerView.Adapter<DisplayViewHolder>
     {
         GameRecordFragment context;
         String playerName;
@@ -727,13 +726,13 @@ public class GameRecordFragment extends Fragment {
         }
 
         @Override
-        public InfoViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.selectable_item, parent, false);
-            return new InfoViewHolder(v);
+        public DisplayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_display, parent, false);
+            return new DisplayViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(InfoViewHolder holder, int position) {
+        public void onBindViewHolder(DisplayViewHolder holder, int position) {
             TeamEntry t = context.Teams.getSelected();
             String name = playerNames.get(position);
             holder.getNameText().setText(name);

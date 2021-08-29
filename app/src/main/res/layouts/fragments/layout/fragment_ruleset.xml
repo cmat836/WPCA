@@ -7,11 +7,11 @@
     tools:context=".fragments.RulesetFragment">
 
     <TextView
-        android:id="@+id/rulesetpagetitle_textview"
+        android:id="@+id/ruleset_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="@string/label_ruleset_title"
+        android:text="@string/ruleset_text_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="44sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,34 +20,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/backtostart_button"
+        android:id="@+id/ruleset_button_return_to_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/button_navigation_startpage"
+        android:text="@string/start_button_start"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Spinner
-        android:id="@+id/spinner_ruleset_select"
+        android:id="@+id/ruleset_spinner_ruleset_select"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="44dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/rulesetpagetitle_textview" />
+        app:layout_constraintTop_toBottomOf="@id/ruleset_text_title" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_addruleset"
+        android:id="@+id/ruleset_fab_ruleset_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="36dp"
         android:clickable="true"
-        android:contentDescription="@string/fab_ruleset_addentry"
+        android:contentDescription="@string/ruleset_fab_add_entry_description"
         android:src="@android:drawable/ic_input_add"
         app:fabCustomSize="75sp"
         app:fabSize="normal"
@@ -56,17 +56,17 @@
         android:focusable="true" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rulesetdisplay_recyclerview"
+        android:id="@+id/ruleset_recycler_rule_display"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_ruleset_select" />
+        app:layout_constraintTop_toBottomOf="@id/ruleset_spinner_ruleset_select" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_removeruleset"
+        android:id="@+id/ruleset_fab_ruleset_remove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
@@ -77,7 +77,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         android:focusable="true"
-        android:contentDescription="@string/fab_ruleset_removeentry" />
+        android:contentDescription="@string/ruleset_fab_remove_entry_descriptions" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

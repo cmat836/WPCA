@@ -6,29 +6,26 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/steal_button"
+        android:id="@+id/swimoff_menu_button_win"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="#E211A614"
         android:insetLeft="6dp"
         android:insetRight="6dp"
-        android:text="Steal"
-        app:layout_constraintBottom_toTopOf="@+id/turnovermenu_turnover_button"
+        android:text="@string/swimoff_menu_button_win"
+        app:layout_constraintBottom_toTopOf="@+id/swimoff_menu_button_lose"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/turnovermenu_turnover_button"
+        android:id="@+id/swimoff_menu_button_lose"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:backgroundTint="#CF4610"
         android:insetLeft="6dp"
         android:insetRight="6dp"
-        android:text="Turnover"
+        android:text="@string/swimoff_menu_button_lose"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/steal_button" />
-
+        app:layout_constraintTop_toBottomOf="@+id/swimoff_menu_button_win" />
 </androidx.constraintlayout.widget.ConstraintLayout>

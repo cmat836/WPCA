@@ -32,5 +32,5 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/button_rulesetremove_remove" />
+        android:text="@string/ruleset_remove_button_remove" />
 </LinearLayout>

@@ -25,6 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.entry.RulesetEntry;
+import com.cmat.wpca.ui.DisplayViewHolder;
 
 public class RulesetFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     DataStore<RulesetEntry> dataStore = new DataStore<>("rulesets", RulesetEntry.class);
@@ -39,7 +40,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
             Bundle savedInstanceState
     ) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.ruleset_page, container, false);
+        return inflater.inflate(R.layout.fragment_ruleset, container, false);
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
@@ -47,19 +48,19 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
         dataStore.load(getContext());
 
-        RecyclerView rulesetDisplay = (RecyclerView)view.findViewById(R.id.rulesetdisplay_recyclerview);
+        RecyclerView rulesetDisplay = (RecyclerView)view.findViewById(R.id.ruleset_recycler_rule_display);
         rulesetDisplay.setLayoutManager(new LinearLayoutManager(getContext()));
         RulesetAdapter radapter = new RulesetAdapter(this);
         rulesetDisplay.setAdapter(radapter);
 
-        Spinner rulesetSelector = (Spinner)view.findViewById(R.id.spinner_ruleset_select);
+        Spinner rulesetSelector = (Spinner)view.findViewById(R.id.ruleset_spinner_ruleset_select);
         rulesetSelector.setOnItemSelectedListener(this);
 
         refreshRulesetSpinner();
 
-        view.findViewById(R.id.backtostart_button).setOnClickListener(this::onBackToStartButtonClick);
-        view.findViewById(R.id.fab_addruleset).setOnClickListener(this::onNewRulesetWindowButtonClick);
-        view.findViewById(R.id.fab_removeruleset).setOnClickListener(this::onRemoveRulesetButtonClick);
+        view.findViewById(R.id.ruleset_button_return_to_start).setOnClickListener(this::rulesetButtonReturnToStart_Clicked);
+        view.findViewById(R.id.ruleset_fab_ruleset_add).setOnClickListener(this::rulesetFabRulesetAdd_Clicked);
+        view.findViewById(R.id.ruleset_fab_ruleset_remove).setOnClickListener(this::rulesetFabRulesetRemove_Clicked);
 
         newRulesetWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         newRulesetWindow.setElevation(20);
@@ -67,21 +68,21 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         ruleModifyWindow.setElevation(20);
     }
 
-    private void onBackToStartButtonClick(View view) {
+    private void rulesetButtonReturnToStart_Clicked(View view) {
         NavHostFragment.findNavController(RulesetFragment.this).popBackStack(R.id.StartPage, false);
     }
 
-    private void onRemoveRulesetButtonClick(View view) {
+    private void rulesetFabRulesetRemove_Clicked(View view) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View removeRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_remove, null);
+        View removeRulesetView = inflater.inflate(R.layout.popup_ruleset_remove, null);
 
         removeRulesetWindow.setContentView(removeRulesetView);
         removeRulesetWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        removeRulesetView.findViewById(R.id.removeruleset_button).setOnClickListener(this::onDeleteRulesetButtonClick);
+        removeRulesetView.findViewById(R.id.ruleset_remove_button_remove).setOnClickListener(this::rulesetRemoveButtonRemove_Clicked);
     }
 
-    private void onDeleteRulesetButtonClick(View view) {
+    private void rulesetRemoveButtonRemove_Clicked(View view) {
         if (dataStore.getSelected() != null) {
             dataStore.removeEntry(dataStore.getSelected());
             dataStore.refresh(getContext());
@@ -90,18 +91,18 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         refreshRulesetSpinner();
     }
 
-    private void onNewRulesetWindowButtonClick(View v) {
+    private void rulesetFabRulesetAdd_Clicked(View v) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View newRulesetView = inflater.inflate(R.layout.popupwindow_ruleset_create, null);
+        View newRulesetView = inflater.inflate(R.layout.popup_ruleset_create, null);
 
         newRulesetWindow.setContentView(newRulesetView);
         newRulesetWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        newRulesetView.findViewById(R.id.createruleset_button).setOnClickListener(this::onCreateRulesetButtonClick);
+        newRulesetView.findViewById(R.id.ruleset_create_button_create).setOnClickListener(this::rulesetCreateButtonCreate_Clicked);
     }
 
-    public void onCreateRulesetButtonClick(View v) {
-        EditText e = (EditText) (newRulesetWindow.getContentView().findViewById(R.id.ruleset_name_edittext));
+    public void rulesetCreateButtonCreate_Clicked(View v) {
+        EditText e = (EditText) (newRulesetWindow.getContentView().findViewById(R.id.ruleset_create_edit_name));
         RulesetEntry newset = new RulesetEntry.RulesetEntryBuilder(e.getText().toString()).build();
         dataStore.setEntry(newset);
         refreshRulesetSpinner();
@@ -109,8 +110,8 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
         newRulesetWindow.dismiss();
     }
 
-    public void onModifyRuleButtonClick(View v, int rule) {
-        EditText e = (EditText) (ruleModifyWindow.getContentView().findViewById(R.id.rule_new_edittext));
+    public void ruleModifyButtonModify_Clicked(View v, int rule) {
+        EditText e = (EditText) (ruleModifyWindow.getContentView().findViewById(R.id.rule_modify_edit_value));
         Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
             ((RulesetEntry.Rule)r).setInfo(e.getText().toString());
@@ -122,32 +123,32 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
     }
 
     public void refreshRulesetSpinner() {
-        Spinner s = this.getView().findViewById(R.id.spinner_ruleset_select);
-        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.spinner_item, dataStore.getArrayOfEntryNames());
+        Spinner s = this.getView().findViewById(R.id.ruleset_spinner_ruleset_select);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), R.layout.item_spinner, dataStore.getArrayOfEntryNames());
         s.setAdapter(adapter);
     }
 
     public void refreshRulesetDisplaySet() {
-        RecyclerView rulesetDisplay = (RecyclerView)this.getView().findViewById(R.id.rulesetdisplay_recyclerview);
+        RecyclerView rulesetDisplay = (RecyclerView)this.getView().findViewById(R.id.ruleset_recycler_rule_display);
         RulesetAdapter radapter = new RulesetAdapter(this);
         rulesetDisplay.setAdapter(radapter);
     }
 
     private boolean onRuleLongPress(View view, int rule) {
         LayoutInflater inflater = (LayoutInflater)getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View ruleModify = inflater.inflate(R.layout.popupwindow_rule_modify, null);
+        View ruleModify = inflater.inflate(R.layout.popup_rule_modify, null);
 
         Object r = dataStore.getSelected().getRuleByPosition(rule);
         if (r instanceof RulesetEntry.Rule) {
-            ((TextView)ruleModify.findViewById(R.id.rulemodify_name_textview)).setText(((RulesetEntry.Rule)r).getName());
+            ((TextView)ruleModify.findViewById(R.id.rule_modify_text_name)).setText(((RulesetEntry.Rule)r).getName());
         }
 
         ruleModifyWindow.setContentView(ruleModify);
         ruleModifyWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-        ruleModify.findViewById(R.id.modifyrule_button).setOnClickListener(new View.OnClickListener() {
+        ruleModify.findViewById(R.id.rule_modify_button_modify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onModifyRuleButtonClick(v, rule);
+                ruleModifyButtonModify_Clicked(v, rule);
             }
         });
         return true;
@@ -165,7 +166,7 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    public static class RulesetAdapter extends RecyclerView.Adapter<ViewHolder> {
+    public static class RulesetAdapter extends RecyclerView.Adapter<DisplayViewHolder> {
         RulesetFragment context;
 
         public RulesetAdapter(RulesetFragment context) {
@@ -174,13 +175,13 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
 
         @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.display_item, parent, false);
-            return new ViewHolder(v);
+        public DisplayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_display, parent, false);
+            return new DisplayViewHolder(v);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        public void onBindViewHolder(@NonNull DisplayViewHolder holder, int position) {
             if (context.dataStore.getSelected().getName() == "blank" || context.dataStore.getSelected().getName() == "") {
                 holder.getNameText().setText("");
                 holder.getInfoText().setText("");
@@ -207,25 +208,5 @@ public class RulesetFragment extends Fragment implements AdapterView.OnItemSelec
             return 5;
         }
 
-    }
-
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView nameText;
-        private final TextView infoText;
-
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-            nameText = (TextView) itemView.findViewById(R.id.textViewName);
-            infoText = (TextView) itemView.findViewById(R.id.textViewInfo);
-        }
-
-        public TextView getNameText() {
-            return nameText;
-        }
-
-        public TextView getInfoText() {
-            return infoText;
-        }
     }
 }

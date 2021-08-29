@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/StartPage"
-        android:name="com.cmat.wpca.fragments.StartPageFragment"
-        android:label="@string/label_startpage_title"
-        tools:layout="@layout/start_page">
+        android:name="com.cmat.wpca.fragments.StartFragment"
+        android:label="@string/start_text_title"
+        tools:layout="@layout/fragment_start">
         <action
             android:id="@+id/action_StartPage_to_GameSetup"
             app:destination="@id/GameSetup" />
@@ -26,8 +26,8 @@
     <fragment
         android:id="@+id/GameRecord"
         android:name="com.cmat.wpca.fragments.GameRecordFragment"
-        android:label="@string/label_gamerecord_title"
-        tools:layout="@layout/game_record">
+        android:label="@string/record_text_title"
+        tools:layout="@layout/fragment_game_record">
 
         <action
             android:id="@+id/action_GameRecordtoStartPage"
@@ -46,8 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/TeamPage"
-        android:name="com.cmat.wpca.fragments.TeamFragment"
-        tools:layout="@layout/team_page">
+        android:name="com.cmat.wpca.fragments.TeamFragment">
         <action
             android:id="@+id/action_TeamPage_to_StartPage"
             app:destination="@id/StartPage" />
@@ -55,7 +54,7 @@
     <fragment
         android:id="@+id/GameSetup"
         android:name="com.cmat.wpca.fragments.GameSetupFragment"
-        tools:layout="@layout/game_setup">
+        tools:layout="@layout/fragment_game_setup">
         <action
             android:id="@+id/action_GameSetup_to_GameRecord"
             app:destination="@id/GameRecord" />
@@ -66,7 +65,7 @@
     <fragment
         android:id="@+id/RuleSets"
         android:name="com.cmat.wpca.fragments.RulesetFragment"
-        tools:layout="@layout/ruleset_page">
+        tools:layout="@layout/fragment_ruleset">
         <action
             android:id="@+id/action_RuleSets_to_StartPage"
             app:destination="@id/StartPage" />
@@ -74,7 +73,7 @@
     <fragment
         android:id="@+id/Evaluation"
         android:name="com.cmat.wpca.fragments.EvaluationFragment"
-        tools:layout="@layout/evaluation_page">
+        tools:layout="@layout/fragment_evaluation">
         <action
             android:id="@+id/action_Evaluation_to_StartPage"
             app:destination="@id/StartPage" />

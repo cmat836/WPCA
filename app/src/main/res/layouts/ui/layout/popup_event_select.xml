@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/event_select_button_shot"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_shot"
+        app:layout_constraintBottom_toTopOf="@id/event_select_button_exclusion"
+        app:layout_constraintEnd_toStartOf="@+id/event_select_button_turnover"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/event_select_button_turnover"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_turnover"
+        app:layout_constraintBottom_toTopOf="@id/event_select_button_block"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/event_select_button_shot"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/event_select_button_exclusion"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_exclusion"
+        app:layout_constraintBottom_toTopOf="@+id/event_select_button_badpass"
+        app:layout_constraintEnd_toStartOf="@id/event_select_button_go_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_select_button_shot" />
+
+    <Button
+        android:id="@+id/event_select_button_go_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:backgroundTint="?attr/colorAlert"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_go_back"
+        app:layout_constraintBottom_toTopOf="@id/event_select_button_badpass"
+        app:layout_constraintEnd_toStartOf="@id/event_select_button_block"
+        app:layout_constraintStart_toEndOf="@id/event_select_button_exclusion"
+        app:layout_constraintTop_toBottomOf="@+id/event_select_button_shot" />
+
+    <Button
+        android:id="@+id/event_select_button_block"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_block"
+        app:layout_constraintBottom_toTopOf="@+id/event_select_button_extra"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/event_select_button_go_back"
+        app:layout_constraintTop_toBottomOf="@id/event_select_button_shot" />
+
+    <Button
+        android:id="@+id/event_select_button_badpass"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_badpass"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/event_select_button_extra"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_select_button_exclusion" />
+
+    <Button
+        android:id="@+id/event_select_button_extra"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:insetLeft="6dp"
+        android:insetRight="6dp"
+        android:text="@string/event_select_button_extra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/event_select_button_badpass"
+        app:layout_constraintTop_toBottomOf="@id/event_select_button_exclusion" />
+</androidx.constraintlayout.widget.ConstraintLayout>

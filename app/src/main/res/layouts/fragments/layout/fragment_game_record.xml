@@ -7,10 +7,10 @@
     tools:context=".fragments.GameRecordFragment">
 
     <TableLayout
-        android:id="@+id/control_table"
+        android:id="@+id/record_table_control"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/action_table"
+        app:layout_constraintBottom_toTopOf="@+id/record_table_players"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,28 +21,28 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/quarter_button"
+                android:id="@+id/record_button_quarter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Pregame" />
+                android:text="@string/record_button_quarter_pregame" />
 
             <TextView
-                android:id="@+id/score_textview"
+                android:id="@+id/record_text_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SCORE"
+                android:text=""
                 android:textAlignment="center"
                 android:textSize="21sp" />
 
             <Button
-                android:id="@+id/oppgoal_button"
+                android:id="@+id/record_button_oppgoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Opp goal" />
+                android:text="@string/record_button_oppgoal" />
         </TableRow>
 
         <TableRow
@@ -51,27 +51,27 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/uneven_button"
+                android:id="@+id/record_button_uneven"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Uneven" />
+                android:text="@string/record_button_uneven" />
 
             <ToggleButton
-                android:id="@+id/possesion_toggle"
+                android:id="@+id/record_toggle_possession"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textOff="HOME"
-                android:textOn="OPP" />
+                android:textOff="@string/record_toggle_possession_off"
+                android:textOn="@string/record_toggle_possession_on" />
 
             <Button
-                android:id="@+id/timeout_button"
+                android:id="@+id/record_button_timeout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="Timeout" />
+                android:text="@string/record_button_timeout" />
 
         </TableRow>
 
@@ -81,23 +81,23 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/timer_textview"
+                android:id="@+id/record_text_timer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/record_text_timer" />
         </TableRow>
 
     </TableLayout>
 
     <TableLayout
-        android:id="@+id/action_table"
+        android:id="@+id/record_table_players"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center"
-        app:layout_constraintBottom_toTopOf="@+id/replay_table"
+        app:layout_constraintBottom_toTopOf="@+id/record_table_replay"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/control_table">
+        app:layout_constraintTop_toBottomOf="@id/record_table_control">
 
         <TableRow
             android:layout_width="match_parent"
@@ -105,23 +105,23 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/player1_button"
+                android:id="@+id/record_button_player_1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="Player1"
+                android:text="@string/record_button_player_1"
                 android:textSize="25sp" />
 
             <Button
-                android:id="@+id/player2_button"
+                android:id="@+id/record_button_player_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="Player2"
+                android:text="@string/record_button_player_2"
                 android:textSize="25sp" />
         </TableRow>
 
@@ -131,23 +131,23 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/player3_button"
+                android:id="@+id/record_button_player_3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="player3"
+                android:text="@string/record_button_player_3"
                 android:textSize="25sp" />
 
             <Button
-                android:id="@+id/player4_button"
+                android:id="@+id/record_button_player_4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="player4"
+                android:text="@string/record_button_player_4"
                 android:textSize="25sp" />
         </TableRow>
 
@@ -157,23 +157,23 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/player5_button"
+                android:id="@+id/record_button_player_5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="player5"
+                android:text="@string/record_button_player_5"
                 android:textSize="25sp" />
 
             <Button
-                android:id="@+id/player6_button"
+                android:id="@+id/record_button_player_6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="player6"
+                android:text="@string/record_button_player_6"
                 android:textSize="25sp" />
         </TableRow>
 
@@ -183,25 +183,25 @@
             android:gravity="center|center_horizontal">
 
             <Button
-                android:id="@+id/player7_button"
+                android:id="@+id/record_button_player_7"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="2dp"
                 android:insetRight="2dp"
                 android:minHeight="100dp"
-                android:text="player7"
+                android:text="@string/record_button_player_7"
                 android:textSize="25sp" />
         </TableRow>
     </TableLayout>
 
     <TableLayout
-        android:id="@+id/replay_table"
+        android:id="@+id/record_table_replay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/action_table">
+        app:layout_constraintTop_toBottomOf="@id/record_table_players">
 
         <TableRow
             android:layout_width="match_parent"
@@ -209,34 +209,34 @@
             android:gravity="center">
 
             <Button
-                android:id="@+id/playback_button"
+                android:id="@+id/record_button_playback_open"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="^" />
+                android:text="@string/record_button_playback_open" />
 
             <LinearLayout
-                android:id="@+id/replay_container"
+                android:id="@+id/record_linearlayout_replay_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:longClickable="true"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/replay_playernumber_textview"
+                    android:id="@+id/record_text_replay_playernumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="25sp" />
 
                 <TextView
-                    android:id="@+id/replay_event_textview"
+                    android:id="@+id/record_text_replay_event"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/replay_timestamp_textview"
+                    android:id="@+id/record_text_replay_timestamp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -244,12 +244,12 @@
 
 
             <Button
-                android:id="@+id/notableplay_button"
+                android:id="@+id/record_button_notable_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:insetLeft="10dp"
                 android:insetRight="10dp"
-                android:text="*" />
+                android:text="@string/record_button_notable_play" />
         </TableRow>
     </TableLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

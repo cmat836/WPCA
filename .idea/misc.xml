@@ -3,8 +3,37 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/evaluation_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/fragment_game_record.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/fragment_game_setup.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/fragment_ruleset.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/fragment_start.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/fragment_teams_old.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/game_record.xml" value="0.15534420289855072" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/fragments/layout/team_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/fragment_teams.xml" value="0.3625" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/item_checkbox.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/item_display.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/item_selectable.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/item_spinner.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_event_select.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_extra_event_select.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_misconduct_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_playback_display.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_player_create.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_rule_modify.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_ruleset_create.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_ruleset_remove.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_shot_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_substitution_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_swimoff_menu.xml" value="0.3625" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_team_create.xml" value="0.20677083333333332" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popup_turnover_menu.xml" value="0.3625" />
         <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popupwindow_event_menu.xml" value="0.15534420289855072" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popupwindow_player_create.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popupwindow_player_remove.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/popupwindow_player_transfer.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/Chris/Documents/GitHub/WPCA/app/src/main/res/layouts/ui/layout/team_page.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

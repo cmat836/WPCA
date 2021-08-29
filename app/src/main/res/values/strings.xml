@@ -2,35 +2,35 @@
     <string name="app_name">WPCA</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for Page Titles -->
-    <string name="label_startpage_title">Start Page</string>
-    <string name="label_gamerecord_title">Game Record</string>
-    <string name="label_gamesetup_title">Game Setup</string>
-    <string name="label_evaluationpage_title">Evaluation Page</string>
-    <string name="label_teampage_title">Manage Teams</string>
-    <string name="label_ruleset_title">Manage Rulesets</string>
+    <string name="evaluation_text_title">Evaluation Page</string>
     <!-- Strings used for Navigation Button Labels-->
-    <string name="button_navigation_gamesetup">Game Setup</string>
-    <string name="button_navigation_ruleset">Ruleset</string>
-    <string name="button_navigation_teampage">Teams</string>
-    <string name="button_navigation_evaluationpage">Evaluation</string>
-    <string name="button_navigation_startpage">Start</string>
+    <string name="start_text_title">Start Page</string>
+    <string name="start_button_gamesetup">Game Setup</string>
+    <string name="start_button_ruleset">Ruleset</string>
+    <string name="start_button_teams">Teams</string>
+    <string name="start_button_evaluation">Evaluation</string>
+    <string name="start_button_start">Start</string>
     <!-- Strings for Ruleset page -->
-    <string name="label_ruleset_select">Select Ruleset</string>
-    <string name="button_ruleset_create">New Set</string>
-    <string name="fab_ruleset_addentry">Add New Entry</string>
-    <string name="fab_ruleset_removeentry">Remove Entry</string>
+    <string name="ruleset_text_title">Manage Rulesets</string>
+    <string name="ruleset_text_select">Select Ruleset</string>
+    <string name="ruleset_button_create">New Set</string>
+    <string name="ruleset_fab_add_entry_description">Add New Entry</string>
+    <string name="ruleset_fab_remove_entry_descriptions">Remove Entry</string>
     <!-- Strings for Ruleset Popup Windows -->
-    <string name="label_rulemodify_title">Modify Rule</string>
-    <string name="label_rulemodify_name">Rule Name</string>
-    <string name="button_rulemodify_modify">Modify</string>
-    <string name="label_rulesetcreate_title">Create New Ruleset</string>
-    <string name="checkbox_rulesetcreate_useparent">Use Parent Ruleset?</string>
-    <string name="hint_rulesetcreate_name">Ruleset Name</string>
-    <string name="button_rulesetcreate_create">Create</string>
-    <string name="label_rulesetremove_title">Remove Ruleset?</string>
-    <string name="button_rulesetremove_remove">Remove</string>
+    <string name="rule_modify_text_title">Modify Rule</string>
+    <string name="rule_modify_text_name">Rule Name</string>
+    <string name="rule_modify_button_modify">Modify</string>
+    <string name="ruleset_create_text_title">Create New Ruleset</string>
+    <string name="ruleset_create_checkbox_parent">Use Parent Ruleset?</string>
+    <string name="ruleset_create_hint_name">Ruleset Name</string>
+    <string name="ruleset_create_button_create">Create</string>
+    <string name="ruleset_remove_text_title">Remove Ruleset?</string>
+    <string name="ruleset_remove_button_remove">Remove</string>
     <!-- Strings for Team page -->
+    <string name="teams_text_title">Manage Teams</string>
     <string name="button_team_filter">Filter</string>
+    <string name="teams_text_team_label">Teams</string>
+    <string name="teams_text_player_label">Players</string>
     <string name="label_playerinfo_name">Name</string>
     <string name="label_playerinfo_number">Number</string>
     <string name="label_playerinfo_birthday">Birthday</string>
@@ -51,4 +51,61 @@
     <string name="label_playerremove_title">Remove Player?</string>
     <string name="label_teamremove_title">Remove Team?</string>
     <string name="label_playertransfer_transfer">Transfer</string>
+    <!-- Strings for Game Setup page -->
+    <string name="setup_text_title">Game Setup</string>
+    <string name="setup_text_start_game">Start Game</string>
+    <string name="setup_text_continue_game">Continue Game</string>
+    <string name="setup_text_players_remaining">Remaining</string>
+    <!-- Strings for Game Record page -->
+    <string name="record_text_title">Game Record</string>
+    <string name="record_button_quarter_pregame">Pre-game</string>
+    <string name="record_button_quarter_q1">Q1</string>
+    <string name="record_button_quarter_q2">Q2</string>
+    <string name="record_button_quarter_q3">Q3</string>
+    <string name="record_button_quarter_q4">Q4</string>
+    <string name="record_button_quarter_between">Between Quarters</string>
+    <string name="record_button_quarter_postgame">Post-game</string>
+    <string name="record_button_oppgoal">Opp Goal</string>
+    <string name="record_button_uneven">Uneven</string>
+    <string name="record_toggle_possession_off">Home</string>
+    <string name="record_toggle_possession_on">Home</string>
+    <string name="record_button_timeout">Timeout</string>
+    <string name="record_text_timer">Time</string>
+    <string name="record_button_player_1">Player 1</string>
+    <string name="record_button_player_2">Player 2</string>
+    <string name="record_button_player_3">Player 3</string>
+    <string name="record_button_player_4">Player 4</string>
+    <string name="record_button_player_5">Player 5</string>
+    <string name="record_button_player_6">Player 6</string>
+    <string name="record_button_player_7">Player 7</string>
+    <string name="record_button_playback_open">^</string>
+    <string name="record_button_notable_play">*</string>
+    <!-- Strings for Game Record Popup windows -->
+    <string name="event_select_button_shot">Shot</string>
+    <string name="event_select_button_turnover">Turnover</string>
+    <string name="event_select_button_exclusion">Exclusion</string>
+    <string name="event_select_button_go_back">Whoops</string>
+    <string name="event_select_button_block">Block</string>
+    <string name="event_select_button_badpass">Bad Pass</string>
+    <string name="event_select_button_extra">Extra</string>
+    <string name="extra_select_button_sub">Sub</string>
+    <string name="extra_select_button_card">Card</string>
+    <string name="extra_select_button_swimoff">Swimoff</string>
+    <string name="extra_select_button_penalty">Penalty</string>
+    <string name="misconduct_menu_button_brutality">Brutality</string>
+    <string name="misconduct_menu_edit_note">Notes</string>
+    <string name="misconduct_menu_button_misconduct">Misconduct</string>
+    <string name="playback_display_text_title">Playback</string>
+    <string name="playback_display_button_return">Return</string>
+    <string name="shot_menu_button_goal">Goal</string>
+    <string name="shot_menu_button_block">Block</string>
+    <string name="shot_menu_button_miss">Miss</string>
+    <string name="substitution_menu_text_directions">Long press a player to sub</string>
+    <string name="substitution_menu_button_return">Return</string>
+    <string name="swimoff_menu_button_win">Win</string>
+    <string name="swimoff_menu_button_lose">Lose</string>
+    <string name="turnover_menu_button_steal">Steal</string>
+    <string name="turnover_menu_button_turnover">Turnover</string>
+
+
 </resources>

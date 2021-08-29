@@ -5,24 +5,25 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/playertransfer_title_text"
+        android:id="@+id/rule_modify_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_playertransfer_title"
+        android:text="@string/rule_modify_text_title"
         android:textAlignment="center"
         android:textSize="30sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        />
 
     <TextView
-        android:id="@+id/playertransfer_name_textview"
+        android:id="@+id/rule_modify_text_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/label_rulemodify_name"
+        android:text="@string/rule_modify_text_name"
         android:textAlignment="center"
         android:textStyle="bold"
         android:layout_marginStart="10dp"
@@ -30,20 +31,25 @@
         android:layout_marginTop="10dp"
         />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/playertransfer_recyclerview"
+    <EditText
+        android:id="@+id/rule_modify_edit_value"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1" />
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text=""
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"/>
 
     <Button
-        android:id="@+id/transferplayer_button"
+        android:id="@+id/rule_modify_button_modify"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_playertransfer_transfer" />
-
+        android:text="@string/rule_modify_button_modify"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

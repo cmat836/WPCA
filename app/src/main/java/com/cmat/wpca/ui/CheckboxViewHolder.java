@@ -1,4 +1,4 @@
-package com.cmat.wpca.fragments;
+package com.cmat.wpca.ui;
 
 import android.view.View;
 import android.widget.CheckBox;
@@ -15,8 +15,8 @@ public class CheckboxViewHolder extends RecyclerView.ViewHolder {
 
     public CheckboxViewHolder(@NonNull View itemView) {
         super(itemView);
-        nameText = (TextView) itemView.findViewById(R.id.textViewName);
-        checkbox = (CheckBox) itemView.findViewById(R.id.checkboxbox);
+        nameText = (TextView) itemView.findViewById(R.id.checkbox_item_text_name);
+        checkbox = (CheckBox) itemView.findViewById(R.id.checkbox_item_checkbox);
     }
 
     public TextView getNameText() {
