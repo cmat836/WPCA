@@ -16,6 +16,7 @@
     <string name="ruleset_button_create">New Set</string>
     <string name="ruleset_fab_add_entry_description">Add New Entry</string>
     <string name="ruleset_fab_remove_entry_descriptions">Remove Entry</string>
+    <string name="ruleset_button_return">Return</string>
     <!-- Strings for Ruleset Popup Windows -->
     <string name="rule_modify_text_title">Modify Rule</string>
     <string name="rule_modify_text_name">Rule Name</string>
@@ -28,28 +29,39 @@
     <string name="ruleset_remove_button_remove">Remove</string>
     <!-- Strings for Team page -->
     <string name="teams_text_title">Manage Teams</string>
-    <string name="button_team_filter">Filter</string>
+    <string name="teams_button_filter">Filter Players</string>
     <string name="teams_text_team_label">Teams</string>
     <string name="teams_text_player_label">Players</string>
-    <string name="label_playerinfo_name">Name</string>
-    <string name="label_playerinfo_number">Number</string>
-    <string name="label_playerinfo_birthday">Birthday</string>
-    <string name="label_playerinfo_teams">Teams</string>
-    <string name="label_playerinfo_handedness">Handedness</string>
-    <string name="label_playerinfo_goalie">Goalie</string>
+    <string name="teams_description_team_add">Add new team</string>
+    <string name="teams_description_team_edit">Edit team</string>
+    <string name="teams_description_team_remove">Remove team</string>
+    <string name="teams_description_player_add">Add new player</string>
+    <string name="teams_description_player_edit">Edit player</string>
+    <string name="teams_description_player_transfer">Transfer player</string>
+    <string name="teams_description_player_remove">Remove player</string>
+    <string name="teams_button_return">Return</string>
     <!-- Strings for Team Popup Windows -->
-    <string name="label_playercreate_title">Create New Player</string>
+    <string name="player_create_text_title">Create New Player</string>
+    <string name="player_create_hint_name">Player Name</string>
+    <string name="player_create_hint_number">Player Number</string>
+    <string name="player_create_radiobutton_left">Left</string>
+    <string name="player_create_radiobutton_right">Right</string>
+    <string name="player_create_checkbox_goalie">Is Player a Goalie</string>
+    <string name="player_create_button_create">Create</string>
+    <string name="player_remove_text_title">Confirm</string>
+    <string name="player_remove_text_warning">The following player will be removed</string>
+    <string name="player_remove_text_warning_plural">The following players will be removed</string>
+    <string name="player_remove_button_remove">Remove</string>
+    <string name="team_remove_text_title">Confirm</string>
+    <string name="team_remove_text_warning">The following team will be removed</string>
+    <string name="team_remove_text_warning_plural">The following teams will be removed</string>
+    <string name="team_remove_button_remove">Remove</string>
     <string name="label_teamcreate_title">Create New Team</string>
     <string name="label_playertransfer_title">Transfer Player</string>
     <string name="label_teamfilter_title">Filter Teams</string>
     <string name="hint_teamcreate_name">Team Name</string>
-    <string name="hint_playercreate_name">Player Name</string>
-    <string name="hint_playercreate_number">Player Number</string>
-    <string name="checkbox_playercreate_goalie">Is Player a Goalie</string>
-    <string name="radiobutton_playercreate_left">Left</string>
-    <string name="radiobutton_playercreate_right">Right</string>
-    <string name="label_playerremove_title">Remove Player?</string>
-    <string name="label_teamremove_title">Remove Team?</string>
+
+
     <string name="label_playertransfer_transfer">Transfer</string>
     <!-- Strings for Game Setup page -->
     <string name="setup_text_title">Game Setup</string>
@@ -106,6 +118,4 @@
     <string name="swimoff_menu_button_lose">Lose</string>
     <string name="turnover_menu_button_steal">Steal</string>
     <string name="turnover_menu_button_turnover">Turnover</string>
-
-
 </resources>

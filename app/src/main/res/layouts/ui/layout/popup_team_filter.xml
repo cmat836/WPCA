@@ -27,6 +27,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="@string/button_team_filter" />
+        android:text="@string/teams_button_filter" />
 
 </LinearLayout>

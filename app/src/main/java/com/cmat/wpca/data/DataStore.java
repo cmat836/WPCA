@@ -86,6 +86,9 @@ public class DataStore <T extends IEntry> {
             loader.removeEntry(context, Objects.requireNonNull(removedData.get(s), "no data found in remove list"));
             removedData.remove(Objects.requireNonNull(removedData.get(s), "no data found in remove list").getName());
         }
+        diffList.clear();
+        removeList.clear();
+        modified = false;
     }
 
     /**
@@ -114,6 +117,32 @@ public class DataStore <T extends IEntry> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**
+     * Get a list of entries with the specific name, returning a blank entry if no entry is found with that name
+     * @param names the names of the entries
+     * @return a list of entries with the specified names, or blank entries from T if no entry was found with a name
+     */
+    public ArrayList<T> getEntries(ArrayList<String> names) {
+        ArrayList<T> ret = new ArrayList<>();
+        for (String name : names) {
+            ret.add(getEntry(name));
+        }
+        return ret;
+    }
+
+    /**
+     * Get a list of entries with the specific name, returning a blank entry if no entry is found with that name
+     * @param names the names of the entries
+     * @return a list of entries with the specified names, or blank entries from T if no entry was found with a name
+     */
+    public ArrayList<T> getEntries(String[] names) {
+        ArrayList<T> ret = new ArrayList<>();
+        for (String name : names) {
+            ret.add(getEntry(name));
+        }
+        return ret;
     }
 
     /**

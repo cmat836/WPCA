@@ -5,90 +5,91 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/createplayer_title_textview"
+        android:id="@+id/player_create_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_playercreate_title"
+        android:text="@string/player_create_text_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/player_name_edittext"
+        android:id="@+id/player_create_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:autofillHints="@string/hint_playercreate_name"
+        android:autofillHints="@string/player_create_hint_name"
         android:ems="10"
-        android:hint="@string/hint_playercreate_name"
+        android:hint="@string/player_create_hint_name"
         android:inputType="textPersonName|textCapWords"
         android:text="" />
 
     <EditText
-        android:id="@+id/player_number_edittext"
+        android:id="@+id/player_create_edit_number"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:autofillHints="@string/hint_playercreate_name"
+        android:autofillHints="@string/player_create_hint_number"
         android:ems="10"
-        android:hint="@string/hint_playercreate_number"
+        android:hint="@string/player_create_hint_number"
         android:inputType="number"
         android:text="" />
 
     <RadioGroup
-        android:id="@+id/player_handedness_group"
+        android:id="@+id/player_create_radiogroup_handedness"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/left_radio"
+            android:id="@+id/player_create_radiobutton_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/radiobutton_playercreate_left" />
+            android:text="@string/player_create_radiobutton_left" />
 
         <RadioButton
-            android:id="@+id/right_radio"
+            android:id="@+id/player_create_radiobutton_right"
             android:layout_width="82dp"
             android:layout_height="wrap_content"
-            android:text="@string/radiobutton_playercreate_right" />
+            android:text="@string/player_create_radiobutton_right" />
     </RadioGroup>
 
     <CheckBox
-        android:id="@+id/goalie_checkbox"
+        android:id="@+id/player_create_checkbox_goalie"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/checkbox_playercreate_goalie" />
+        android:text="@string/player_create_checkbox_goalie" />
 
     <Spinner
-        android:id="@+id/spinner_team_assign"
+        android:id="@+id/player_create_spinner_team_assign"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:spinnerMode="dialog" />
 
     <Button
-        android:id="@+id/createplayer_button"
+        android:id="@+id/player_create_button_create"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/ruleset_create_button_create"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/player_create_button_create" />
 </LinearLayout>

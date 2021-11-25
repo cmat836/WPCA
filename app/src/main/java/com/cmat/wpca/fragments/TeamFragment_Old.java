@@ -170,7 +170,7 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
         removeTeamWindow.setContentView(removeTeamView);
         removeTeamWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        removeTeamView.findViewById(R.id.removeteam_button).setOnClickListener(this::onTeamRemoved);
+        removeTeamView.findViewById(R.id.team_remove_button_remove).setOnClickListener(this::onTeamRemoved);
     }
 
     private void onTeamRemoved(View view) {
@@ -193,7 +193,7 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
         removePlayerWindow.setContentView(removePlayerView);
         removePlayerWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        removePlayerView.findViewById(R.id.removeplayer_button).setOnClickListener(this::onPlayerRemoved);
+        removePlayerView.findViewById(R.id.player_remove_button_remove).setOnClickListener(this::onPlayerRemoved);
     }
 
     private void onPlayerRemoved(View view) {
@@ -210,8 +210,8 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
 
         //newPlayerWindow.setFocusable(true);
 
-        addPlayerView.findViewById(R.id.createplayer_button).setOnClickListener(this::onPlayerCreated);
-        Spinner team = (Spinner)addPlayerView.findViewById(R.id.spinner_team_assign);
+        addPlayerView.findViewById(R.id.player_create_button_create).setOnClickListener(this::onPlayerCreated);
+        Spinner team = (Spinner)addPlayerView.findViewById(R.id.player_create_spinner_team_assign);
         team.setAdapter(new ArrayAdapter<String>(getContext(), R.layout.item_spinner, teamData.getArrayOfEntryNames()));
     }
 
@@ -233,12 +233,12 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
 
     private void onPlayerCreated(View view) {
         View v = newPlayerWindow.getContentView();
-        Spinner spin = (Spinner)v.findViewById(R.id.spinner_team_assign);
+        Spinner spin = (Spinner)v.findViewById(R.id.player_create_spinner_team_assign);
         String team = spin.getItemAtPosition(spin.getSelectedItemPosition()).toString();
-        String name = ((EditText)v.findViewById(R.id.player_name_edittext)).getText().toString();
-        String number = ((EditText)v.findViewById(R.id.player_number_edittext)).getText().toString();
-        PlayerEntry.Handedness h = ((RadioButton)v.findViewById(R.id.left_radio)).isChecked() ? PlayerEntry.Handedness.LEFT : PlayerEntry.Handedness.RIGHT;
-        boolean goalie = ((CheckBox)v.findViewById(R.id.goalie_checkbox)).isChecked();
+        String name = ((EditText)v.findViewById(R.id.player_create_edit_name)).getText().toString();
+        String number = ((EditText)v.findViewById(R.id.player_create_edit_number)).getText().toString();
+        PlayerEntry.Handedness h = ((RadioButton)v.findViewById(R.id.player_create_radiobutton_left)).isChecked() ? PlayerEntry.Handedness.LEFT : PlayerEntry.Handedness.RIGHT;
+        boolean goalie = ((CheckBox)v.findViewById(R.id.player_create_checkbox_goalie)).isChecked();
 
         PlayerEntry newPlayer = new PlayerEntry.PlayerBuilder(name, number).handedness(h).setGoalie(goalie).build();
         if (team != "none") {
@@ -461,6 +461,7 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
                 PlayerEntry p = context.playerData.getSelected();
 
                 switch (position) {
+                    /*
                     case 0: {
                         holder.getNameText().setText(R.string.label_playerinfo_name);
                         holder.getInfoText().setText(p.getName());
@@ -497,6 +498,8 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
                         holder.getInfoText().setText(p.getTeamList().toString());
                         break;
                     }
+                    */
+
                 }
             }
         }

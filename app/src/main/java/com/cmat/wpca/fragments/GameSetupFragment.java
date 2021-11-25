@@ -24,6 +24,7 @@ import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.entry.PlayerEntry;
 import com.cmat.wpca.data.entry.RulesetEntry;
 import com.cmat.wpca.data.entry.TeamEntry;
+import com.cmat.wpca.ui.SelectableAdapter;
 import com.cmat.wpca.ui.SelectableViewHolder;
 
 import java.util.ArrayList;
@@ -63,7 +64,7 @@ public class GameSetupFragment extends Fragment {
 
         RecyclerView playerSelect = (RecyclerView)view.findViewById(R.id.setup_recycler_player_select);
         playerSelect.setLayoutManager(new LinearLayoutManager(getContext()));
-        PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(this);
+        PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(new ArrayList<>());
         playerSelect.setAdapter(playerAdapter);
 
         view.findViewById(R.id.setup_button_start_game).setOnClickListener(this::gameStartButtonClick);
@@ -74,7 +75,7 @@ public class GameSetupFragment extends Fragment {
 
     private void refreshTeamDisplay() {
         RecyclerView teamDisplay = (RecyclerView)this.getView().findViewById(R.id.setup_recycler_player_select);
-        PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(this);
+        PlayerSelectAdapter playerAdapter = new GameSetupFragment.PlayerSelectAdapter(playerData.getEntries(teamData.getSelected().getNameList()));
         teamDisplay.setAdapter(playerAdapter);
     }
 
@@ -84,9 +85,9 @@ public class GameSetupFragment extends Fragment {
         String teamName = st.getItemAtPosition(st.getSelectedItemPosition()).toString();
         String rulesetName = sr.getItemAtPosition(sr.getSelectedItemPosition()).toString();
         String[] selectedPlayers = new String[7];
-        ArrayList<String> players = ((PlayerSelectAdapter)((RecyclerView)getView().findViewById(R.id.setup_recycler_player_select)).getAdapter()).selectedPlayers;
+        ArrayList<PlayerEntry> players = ((PlayerSelectAdapter)((RecyclerView)getView().findViewById(R.id.setup_recycler_player_select)).getAdapter()).getSelectedData();
         for (int i = 0; i < players.size(); i++) {
-            selectedPlayers[i] = players.get(i);
+            selectedPlayers[i] = players.get(i).getName();
         }
         Bundle dat = new Bundle();
         dat.putString("teamName", teamName);
@@ -99,59 +100,31 @@ public class GameSetupFragment extends Fragment {
         NavHostFragment.findNavController(GameSetupFragment.this).popBackStack(R.id.StartPage, false);
     }
 
-    public class PlayerSelectAdapter extends RecyclerView.Adapter<SelectableViewHolder>
-    {
-        GameSetupFragment context;
-        ArrayList<String> selectedPlayers = new ArrayList<>();
+    public class PlayerSelectAdapter extends SelectableAdapter<PlayerEntry> {
 
-        public PlayerSelectAdapter(GameSetupFragment gameSetupFragment) {
-            super();
-            context = gameSetupFragment;
+        public PlayerSelectAdapter(ArrayList<PlayerEntry> data) {
+            super(data);
         }
 
         @Override
-        public SelectableViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_selectable, parent, false);
-            return new SelectableViewHolder(v, context.getContext());
+        public String getNameText(PlayerEntry object) {
+            return object.getName();
         }
 
         @Override
-        public void onBindViewHolder(SelectableViewHolder holder, int position) {
-            TeamEntry t = context.teamData.getSelected();
-            if (t.getName() == "blank") {
-                holder.getNameText().setText("name");
-                holder.getInfoText().setText("0");
-                return;
-            }
-            String name = t.getNameList().get(position);
-            holder.getNameText().setText(name);
-            holder.getInfoText().setText(playerData.getEntry(name).getNumber());
-            holder.setSelected(selectedPlayers.contains(name));
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (!holder.isSelected() && playersRemaining > 0) {
-                        holder.setSelected(true);
-                        selectedPlayers.remove(name);
-                        selectedPlayers.add(name);
-
-                    } else {
-                        holder.setSelected(false);
-                        selectedPlayers.remove(name);
-                    }
-                    playersRemaining = 7 - selectedPlayers.size();
-                    ((TextView)context.getView().findViewById(R.id.setup_text_players_remaining_number)).setText((String.valueOf(playersRemaining)));
-                }
-            });
+        public String getInfoText(PlayerEntry object) {
+            return object.getNumber();
         }
 
         @Override
-        public int getItemCount() {
-            if (teamData.getSelected().getName() == "blank") {
-                return 0;
-            } else {
-                return teamData.getSelected().getNameList().size();
-            }
+        public boolean isSelectionAllowed() {
+            return playersRemaining > 0;
+        }
+
+        @Override
+        public void onSelectViewHolder(PlayerEntry object, boolean selected) {
+            playersRemaining = 7 - getSelectedData().size();
+            ((TextView)getView().findViewById(R.id.setup_text_players_remaining_number)).setText((String.valueOf(playersRemaining)));
         }
     }
 

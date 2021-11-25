@@ -9,7 +9,7 @@
         android:id="@+id/teams_button_filter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/button_team_filter"
+        android:text="@string/teams_button_filter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,13 +54,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@id/teams_fab_team_remove"
+        android:contentDescription="@string/teams_description_team_add"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/teams_fab_team_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/teams_recycler_team_list"
         app:layout_constraintTop_toTopOf="@id/teams_recycler_team_list"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/teams_fab_team_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:clickable="true"
+        android:contentDescription="@string/teams_description_team_edit"
+        android:focusable="true"
+        app:backgroundTint="@color/colorstatelist_fab"
+        app:layout_constraintBottom_toTopOf="@+id/teams_fab_team_remove"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/teams_recycler_team_list"
+        app:layout_constraintTop_toBottomOf="@+id/teams_fab_team_add"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/teams_fab_team_remove"
@@ -68,11 +87,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:clickable="true"
+        android:contentDescription="@string/teams_description_team_remove"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/teams_recycler_team_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/teams_recycler_team_list"
-        app:layout_constraintTop_toBottomOf="@id/teams_fab_team_add"
+        app:layout_constraintTop_toBottomOf="@id/teams_fab_team_edit"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <TextView
@@ -90,7 +112,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:minHeight="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/teams_button_return"
         app:layout_constraintEnd_toStartOf="@id/teams_fab_player_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/teams_text_player_label" />
@@ -100,9 +122,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@id/teams_fab_player_remove"
+        android:contentDescription="@string/teams_description_player_add"
+        android:focusable="true"
+        app:layout_constraintBottom_toTopOf="@id/teams_fab_player_edit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/teams_recycler_player_list"
         app:layout_constraintTop_toTopOf="@id/teams_recycler_player_list"
@@ -115,11 +140,14 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
+        android:contentDescription="@string/teams_description_player_remove"
+        android:focusable="true"
         app:layout_constraintBottom_toBottomOf="@id/teams_recycler_player_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/teams_recycler_player_list"
-        app:layout_constraintTop_toBottomOf="@id/teams_fab_player_add"
+        app:layout_constraintTop_toBottomOf="@id/teams_fab_player_transfer"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -129,6 +157,9 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
+        android:contentDescription="@string/teams_description_player_edit"
+        android:focusable="true"
+        app:backgroundTint="@color/colorstatelist_fab"
         app:layout_constraintBottom_toTopOf="@id/teams_fab_player_transfer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teams_recycler_player_list"
@@ -142,23 +173,22 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="20dp"
         android:clickable="true"
+        android:contentDescription="@string/teams_description_player_transfer"
+        android:focusable="true"
         app:layout_constraintBottom_toTopOf="@id/teams_fab_player_remove"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teams_recycler_player_list"
         app:layout_constraintTop_toBottomOf="@+id/teams_fab_player_edit"
         app:srcCompat="@android:drawable/ic_popup_sync" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/teams_fab_team_edit"
+    <Button
+        android:id="@+id/teams_button_return"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/teams_fab_team_remove"
+        android:text="@string/teams_button_return"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/teams_recycler_team_list"
-        app:layout_constraintTop_toBottomOf="@+id/teams_fab_team_add"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teams_recycler_player_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,32 +5,38 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/removeteam_title_textview"
+        android:id="@+id/team_remove_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_teamremove_title"
+        android:text="@string/team_remove_text_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/removeteam_name"
-        android:layout_width="match_parent"
+        android:id="@+id/team_remove_text_warning"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:text="@string/team_remove_text_warning" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/team_remove_recycler_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
 
     <Button
-        android:id="@+id/removeteam_button"
+        android:id="@+id/team_remove_button_remove"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/ruleset_remove_button_remove" />
+        android:text="@string/team_remove_button_remove" />
 </LinearLayout>

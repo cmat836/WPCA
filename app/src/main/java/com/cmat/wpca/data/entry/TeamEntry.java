@@ -49,6 +49,13 @@ public class TeamEntry implements IEntry {
         return new ArrayList<>(playerNames);
     }
 
+    /**
+     * Gets how large the team is
+     * @return the size of the team
+     */
+    public int getSize() {
+        return playerNames.size();
+    }
 
     @Override
     public String getName() {
