@@ -76,6 +76,9 @@ public class TeamFragment  extends Fragment {
         getView().findViewById(R.id.teams_fab_team_remove).setOnClickListener(this::teamsFabTeamRemove_Clicked);
         getView().findViewById(R.id.teams_button_return).setOnClickListener(this::teamsButtonReturn_Clicked);
 
+        getView().findViewById(R.id.teams_fab_player_remove).setEnabled(false);
+        getView().findViewById(R.id.teams_fab_team_remove).setEnabled(false);
+
         RecyclerView teamList = (RecyclerView)view.findViewById(R.id.teams_recycler_team_list);
         teamList.setLayoutManager(new LinearLayoutManager(getContext()));
         TeamAdapter teamAdapter = new TeamAdapter(teamData.getEntries(teamData.getArrayOfEntryNames()));
@@ -151,7 +154,56 @@ public class TeamFragment  extends Fragment {
         removeTeamWindow.setContentView(content);
         removeTeamWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+        // Find the selected teams
+        RecyclerView teamList = (RecyclerView)getView().findViewById(R.id.teams_recycler_team_list);
+        TeamAdapter adapter = (TeamAdapter) teamList.getAdapter();
 
+        // Send them to the window
+        RecyclerView removedTeamList = (RecyclerView)content.findViewById(R.id.team_remove_recycler_list);
+        DisplayAdapter<TeamEntry> teamAdapter = new DisplayAdapter<TeamEntry>(adapter.getSelectedData()) {
+            @Override
+            public String getNameText(TeamEntry object) {
+                return object.getName();
+            }
+
+            @Override
+            public String getInfoText(TeamEntry object) {
+                return String.valueOf(object.getSize());
+            }
+        };
+        removedTeamList.setLayoutManager(new LinearLayoutManager(getContext()));
+        removedTeamList.setAdapter(teamAdapter);
+
+        if (adapter.getSelectedData().size() > 1) {
+            ((TextView)content.findViewById(R.id.team_remove_text_warning)).setText(R.string.team_remove_text_warning_plural);
+        }
+
+        content.findViewById(R.id.team_remove_button_remove).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Find the selected teams
+                RecyclerView teamList = (RecyclerView)getView().findViewById(R.id.teams_recycler_team_list);
+                TeamAdapter adapter = (TeamAdapter) teamList.getAdapter();
+
+                for (TeamEntry t : adapter.getSelectedData()) {
+                    teamData.removeEntry(t);
+                    if (t.getSize() > 0) {
+                        for (String p : t.getNameList()) {
+                            playerData.getEntry(p).removeTeam(t.getName());
+                            playerData.markModified(p);
+                        }
+                    }
+                }
+
+                playerData.refresh(getContext());
+                teamData.refresh(getContext());
+
+                refreshPlayerDisplay();
+                refreshTeamDisplay();
+
+                removeTeamWindow.dismiss();
+            }
+        });
     }
 
     private void teamsFabTeamEdit_Clicked(View view) {
@@ -172,7 +224,17 @@ public class TeamFragment  extends Fragment {
 
         // Send them to the window
         RecyclerView removedPlayerList = (RecyclerView)content.findViewById(R.id.player_remove_recycler_list);
-        PlayerDisplayAdapter playerAdapter = new PlayerDisplayAdapter(adapter.getSelectedData());
+        DisplayAdapter<PlayerEntry> playerAdapter = new DisplayAdapter<PlayerEntry>(adapter.getSelectedData()) {
+            @Override
+            public String getNameText(PlayerEntry object) {
+                return object.getName();
+            }
+
+            @Override
+            public String getInfoText(PlayerEntry object) {
+                return object.getNumber();
+            }
+        };
         removedPlayerList.setLayoutManager(new LinearLayoutManager(getContext()));
         removedPlayerList.setAdapter(playerAdapter);
 
@@ -291,6 +353,15 @@ public class TeamFragment  extends Fragment {
                 ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_edit)).setFocusable(true);
                 ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_edit)).setEnabled(true);
             }
+            if (getSelectedData().size() == 0) {
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setClickable(false);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setFocusable(false);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setEnabled(false);     
+            } else {
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setClickable(true);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setFocusable(true);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_team_remove)).setEnabled(true);
+            }
         }
     }
 
@@ -326,23 +397,15 @@ public class TeamFragment  extends Fragment {
                 ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_edit)).setFocusable(true);
                 ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_edit)).setEnabled(true);
             }
-        }
-    }
-
-    public class PlayerDisplayAdapter extends DisplayAdapter<PlayerEntry> {
-
-        public PlayerDisplayAdapter(ArrayList<PlayerEntry> data) {
-            super(data);
-        }
-
-        @Override
-        public String getNameText(PlayerEntry object) {
-            return object.getName();
-        }
-
-        @Override
-        public String getInfoText(PlayerEntry object) {
-            return object.getNumber();
+            if (getSelectedData().size() == 0) {
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setClickable(false);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setFocusable(false);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setEnabled(false);
+            } else {
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setClickable(true);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setFocusable(true);
+                ((FloatingActionButton)getView().findViewById(R.id.teams_fab_player_remove)).setEnabled(true);
+            }
         }
     }
 
