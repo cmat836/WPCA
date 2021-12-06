@@ -65,6 +65,16 @@ public abstract class SelectableAdapter<T> extends RecyclerView.Adapter<Selectab
         return data.size();
     }
 
+    public void modifyData(ArrayList<T> newData) {
+        this.data = newData;
+        for (T e : selectedData) {
+            if (!this.data.contains(e)) {
+                selectedData.remove(e);
+            }
+        }
+        this.notifyDataSetChanged();
+    }
+
     public ArrayList<T> getSelectedData() {
         return selectedData;
     }

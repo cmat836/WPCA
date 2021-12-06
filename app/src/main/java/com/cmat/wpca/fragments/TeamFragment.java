@@ -1,9 +1,8 @@
 package com.cmat.wpca.fragments;
 
-import android.content.res.ColorStateList;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -28,11 +26,8 @@ import com.cmat.wpca.R;
 import com.cmat.wpca.data.DataStore;
 import com.cmat.wpca.data.entry.PlayerEntry;
 import com.cmat.wpca.data.entry.TeamEntry;
-import com.cmat.wpca.data.event.Game;
 import com.cmat.wpca.ui.DisplayAdapter;
-import com.cmat.wpca.ui.DisplayViewHolder;
 import com.cmat.wpca.ui.SelectableAdapter;
-import com.cmat.wpca.ui.SelectableViewHolder;
 import com.cmat.wpca.ui.SimplifiedPopupWindow;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -210,7 +205,87 @@ public class TeamFragment  extends Fragment {
     }
 
     private void teamsFabTeamAdd_Clicked(View view) {
+        View content = this.getLayoutInflater().inflate(R.layout.popup_team_create, null);
+        newTeamWindow.setContentView(content);
+        newTeamWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
+        ArrayList<PlayerEntry> players = playerData.getEntries(playerData.getArrayOfEntryNames());
+
+        int maxTeam = 4;
+
+        SelectableAdapter<PlayerEntry> playerAdapter = new SelectableAdapter<PlayerEntry>(players) {
+            @Override
+            public String getNameText(PlayerEntry object) {
+                return object.getName();
+            }
+
+            @Override
+            public String getInfoText(PlayerEntry object) {
+                return object.getNumber();
+            }
+
+            @Override
+            public boolean isSelectionAllowed() {
+                return (this.getSelectedData().size() < maxTeam);
+            }
+
+            @Override
+            public void onSelectViewHolder(PlayerEntry object, boolean selected) {
+            }
+        };
+
+        RecyclerView playerView = (RecyclerView)content.findViewById(R.id.team_create_recycler_select);
+        playerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        playerView.setAdapter(playerAdapter);
+
+        ((EditText)content.findViewById(R.id.team_create_edit_filter)).addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                ArrayList<PlayerEntry> filteredList = new ArrayList<>();
+                for (PlayerEntry p : players) {
+                    if (p.getName().toLowerCase().contains(s.toString().toLowerCase())) {
+                        filteredList.add(p);
+                    }
+                }
+                playerAdapter.modifyData(filteredList);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        content.findViewById(R.id.team_create_button_create).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String teamName = ((EditText)content.findViewById(R.id.team_create_edit_name)).getText().toString();
+                ArrayList<PlayerEntry> players = playerAdapter.getSelectedData();
+
+                TeamEntry newTeam = new TeamEntry();
+                newTeam.setName(teamName);
+                for (PlayerEntry p : players) {
+                    newTeam.addPlayer(p.getName());
+                    p.addTeam(teamName);
+                    playerData.markModified(p.getName());
+                }
+
+                teamData.setEntry(newTeam);
+
+                playerData.refresh(getContext());
+                teamData.refresh(getContext());
+
+                refreshTeamDisplay();
+                refreshPlayerDisplay();
+
+                newTeamWindow.dismiss();
+            }
+        });
     }
 
     private void teamsFabPlayerRemove_Clicked(View view) {
@@ -219,7 +294,7 @@ public class TeamFragment  extends Fragment {
         removePlayerWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
         // Find the selected players
-        RecyclerView playerList = (RecyclerView)getView().findViewById(R.id.teams_recycler_player_list);
+        RecyclerView playerList = getView().findViewById(R.id.teams_recycler_player_list);
         PlayerAdapter adapter = (PlayerAdapter) playerList.getAdapter();
 
         // Send them to the window
@@ -272,6 +347,38 @@ public class TeamFragment  extends Fragment {
     }
 
     private void teamsFabPlayerTransfer_Clicked(View view) {
+        View content = this.getLayoutInflater().inflate(R.layout.popup_player_transfer, null);
+        transferPlayerWindow.setContentView(content);
+        transferPlayerWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+        RecyclerView playerList = (RecyclerView)getView().findViewById(R.id.teams_recycler_player_list);
+        PlayerAdapter playerAdapter = (PlayerAdapter)playerList.getAdapter();
+        ArrayList<PlayerEntry> players = playerAdapter.getSelectedData();
+
+        SelectableAdapter<TeamEntry> teamAdapter = new SelectableAdapter<TeamEntry>(teamData.getEntries(teamData.getArrayOfEntryNames())) {
+            @Override
+            public String getNameText(TeamEntry object) {
+                return object.getName();
+            }
+
+            @Override
+            public String getInfoText(TeamEntry object) {
+                return String.valueOf(object.getSize());
+            }
+
+            @Override
+            public boolean isSelectionAllowed() {
+                return true;
+            }
+
+            @Override
+            public void onSelectViewHolder(TeamEntry object, boolean selected) {
+            }
+        };
+
+        RecyclerView teamView = (RecyclerView)content.findViewById(R.id.player_transfer_recyclerview_teams);
+        teamView.setLayoutManager(new LinearLayoutManager(getContext()));
+        teamView.setAdapter(teamAdapter);
     }
 
     private void teamsFabPlayerEdit_Clicked(View view) {

@@ -5,39 +5,58 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/createteam_title_textview"
+        android:id="@+id/team_create_text_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:text="@string/label_teamcreate_title"
+        android:text="@string/team_create_text_title"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/team_name_edittext"
+        android:id="@+id/team_create_edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_weight="1"
-        android:autofillHints="@string/hint_teamcreate_name"
+        android:autofillHints="@string/team_create_hint_name"
         android:ems="10"
-        android:hint="@string/hint_teamcreate_name"
-        android:inputType="textPersonName"
-        android:text="" />
+        android:hint="@string/team_create_hint_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/team_create_edit_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_weight="1"
+        android:autofillHints="@string/team_create_hint_search"
+        android:ems="10"
+        android:hint="@string/team_create_hint_search"
+        android:inputType="textPersonName" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/team_create_recycler_select"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:minHeight="200dp" />
 
     <Button
-        android:id="@+id/createteam_button"
+        android:id="@+id/team_create_button_create"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="@string/ruleset_create_button_create"
         android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_weight="1"
+        android:text="@string/team_create_button_create" />
 </LinearLayout>

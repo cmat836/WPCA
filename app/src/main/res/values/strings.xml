@@ -56,13 +56,15 @@
     <string name="team_remove_text_warning">The following team will be removed</string>
     <string name="team_remove_text_warning_plural">The following teams will be removed</string>
     <string name="team_remove_button_remove">Remove</string>
-    <string name="label_teamcreate_title">Create New Team</string>
-    <string name="label_playertransfer_title">Transfer Player</string>
+    <string name="team_create_text_title">Create New Team</string>
+    <string name="team_create_hint_name">Team Name</string>
+    <string name="team_create_hint_search">Filter Players</string>
+    <string name="team_create_button_create">Create</string>
+    <string name="player_transfer_text_title">Transfer Player</string>
+    <string name="player_transfer_text_title_plural">Transfer Players</string>
+    <string name="player_transfer_text_transfer">Transfer</string>
     <string name="label_teamfilter_title">Filter Teams</string>
-    <string name="hint_teamcreate_name">Team Name</string>
 
-
-    <string name="label_playertransfer_transfer">Transfer</string>
     <!-- Strings for Game Setup page -->
     <string name="setup_text_title">Game Setup</string>
     <string name="setup_text_start_game">Start Game</string>

@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -184,7 +183,7 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
         newTeamWindow.setContentView(addTeamView);
         newTeamWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
 
-        addTeamView.findViewById(R.id.createteam_button).setOnClickListener(this::onTeamCreated);
+        addTeamView.findViewById(R.id.team_create_button_create).setOnClickListener(this::onTeamCreated);
     }
 
     private void onRemovePlayerButtonClick(View view) {
@@ -217,7 +216,7 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
 
     private void onTeamCreated(View view) {
         View v = newTeamWindow.getContentView();
-        String name = ((EditText)v.findViewById(R.id.team_name_edittext)).getText().toString();
+        String name = ((EditText)v.findViewById(R.id.team_create_edit_name)).getText().toString();
 
         TeamEntry newTeam = new TeamEntry();
         newTeam.setName(name);
@@ -270,10 +269,10 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
         transferPlayerWindow.setContentView(content);
         transferPlayerWindow.showAtLocation(v, Gravity.CENTER, 0, 0);
 
-        ((TextView)transferPlayerWindow.getContentView().findViewById(R.id.playertransfer_name_textview)).setText(name);
-        transferPlayerWindow.getContentView().findViewById(R.id.transferplayer_button).setOnClickListener(this::onTransferPlayer);
+        //((TextView)transferPlayerWindow.getContentView().findViewById(R.id.playertransfer_name_textview)).setText(name);
+        transferPlayerWindow.getContentView().findViewById(R.id.player_transfer_button_transfer).setOnClickListener(this::onTransferPlayer);
 
-        RecyclerView filterrec = (RecyclerView)content.findViewById(R.id.playertransfer_recyclerview);
+        RecyclerView filterrec = (RecyclerView)content.findViewById(R.id.player_transfer_recyclerview_teams);
         filterrec.setLayoutManager(new LinearLayoutManager(getContext()));
         FilterAdapter filterAdapter = new FilterAdapter(this, playerData.getEntry(name).getTeamList());
         filterrec.setAdapter(filterAdapter);
@@ -282,9 +281,10 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
     }
 
     private void onTransferPlayer(View view) {
+        /*
         String pname = ((TextView)transferPlayerWindow.getContentView().findViewById(R.id.playertransfer_name_textview)).getText().toString();
         View v = transferPlayerWindow.getContentView();
-        FilterAdapter f = (FilterAdapter) ((RecyclerView)v.findViewById(R.id.playertransfer_recyclerview)).getAdapter();
+        FilterAdapter f = (FilterAdapter) ((RecyclerView)v.findViewById(R.id.player_transfer_recyclerview_teams)).getAdapter();
         playerData.getEntry(pname).setTeams(f.getNewSelectedList());
         playerData.markModified(pname);
         for (String tname : teamData.getArrayOfEntryNames()) {
@@ -299,6 +299,8 @@ public class TeamFragment_Old extends Fragment implements AdapterView.OnItemSele
         teamData.refresh(getContext());
         refreshTeamDisplay();
         transferPlayerWindow.dismiss();
+
+         */
     }
 
     private boolean onChangeName(View v) {
